@@ -14,7 +14,7 @@
       "name": "book-latex",
       "source": {
         "source": "github",
-        "repo": "pytagoras/pytagoras-agent-plugins",
+        "repo": "pytagoraspublishing/pytagoras-agent-plugins",
         "path": "plugins/book-latex",
         "ref": "main"
       },
@@ -24,7 +24,7 @@
         "name": "BIPA",
         "email": "bard.i.a.pettersen@himolde.no"
       },
-      "repository": "https://github.com/pytagoras/pytagoras-agent-plugins",
+      "repository": "https://github.com/pytagoraspublishing/pytagoras-agent-plugins",
       "license": "MIT",
       "keywords": [
         "book",
@@ -47,7 +47,7 @@
       "name": "statusline",
       "source": {
         "source": "github",
-        "repo": "pytagoras/pytagoras-agent-plugins",
+        "repo": "pytagoraspublishing/pytagoras-agent-plugins",
         "path": "plugins/statusline",
         "ref": "main"
       },
@@ -57,7 +57,7 @@
         "name": "BIPA",
         "email": "bard.i.a.pettersen@himolde.no"
       },
-      "repository": "https://github.com/pytagoras/pytagoras-agent-plugins",
+      "repository": "https://github.com/pytagoraspublishing/pytagoras-agent-plugins",
       "license": "MIT",
       "keywords": [
         "statusline",
