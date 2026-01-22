@@ -30,6 +30,27 @@
       "category": "writing",
       "tags": ["book", "latex", "typesetting", "academic", "publishing"],
       "strict": true
+    },
+    {
+      "name": "statusline",
+      "source": {
+        "source": "github",
+        "repo": "pytagoras/agent-plugins",
+        "path": "plugins/statusline",
+        "ref": "main"
+      },
+      "description": "Custom statusline for Claude Code - displays context usage, session time, git branch, and more",
+      "version": "1.0.0",
+      "author": {
+        "name": "BIPA",
+        "email": "bard.i.a.pettersen@himolde.no"
+      },
+      "repository": "https://github.com/pytagoras/agent-plugins",
+      "license": "MIT",
+      "keywords": ["statusline", "ui", "context", "session", "monitoring"],
+      "category": "utilities",
+      "tags": ["statusline", "ui", "context", "session", "monitoring"],
+      "strict": true
     }
   ]
 }

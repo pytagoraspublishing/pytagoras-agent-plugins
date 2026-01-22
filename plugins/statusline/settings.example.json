@@ -1,0 +1,7 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "uv run --script <path-to-plugin>/statusline.py",
+    "padding": 0
+  }
+}

@@ -36,7 +36,8 @@ For example:
 
 | Plugin         | Description                                                                                     |
 | -------------- | ----------------------------------------------------------------------------------------------- |
-| `book-latex` | Manage book projects with LaTeX support - create/edit parts, chapters, sections, and appendices |
+| `book-latex`   | Manage book projects with LaTeX support - create/edit parts, chapters, sections, and appendices |
+| `statusline`   | Custom statusline for Claude Code - displays context usage, session time, git branch, and more  |
 
 ## Plugin Commands
 
