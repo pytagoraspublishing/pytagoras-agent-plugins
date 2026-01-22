@@ -9,5 +9,5 @@ build/
 # Keep other PDFs
 *.pdf
 
-
+.claude\statusline_debug.log
 .env
