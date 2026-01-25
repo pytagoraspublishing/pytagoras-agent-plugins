@@ -1,11 +1,11 @@
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["pyyaml"]
+# dependencies = []
 # ///
 """
 Core book initialization logic.
 
-Creates config.yaml and calls type-specific init scripts.
+Calls type-specific init scripts.
 
 Can be used as:
 1. Module: from init_book import init_project
@@ -19,43 +19,8 @@ Examples:
 import sys
 from pathlib import Path
 
-try:
-    import yaml
-except ImportError:
-    yaml = None  # Will fail gracefully if run without yaml
-
 
 SUPPORTED_TYPES = ["latex", "markdown", "html"]
-
-
-def create_config(project_root: Path, book_type: str, echo=print) -> None:
-    """Create or update config.yaml with the book type."""
-    config_path = project_root / "config.yaml"
-
-    if config_path.exists():
-        # Load existing config
-        with open(config_path, "r", encoding="utf-8") as f:
-            config = yaml.safe_load(f) or {}
-
-        # Add type to list if not already present
-        if "types" not in config:
-            config["types"] = []
-        if book_type not in config["types"]:
-            config["types"].append(book_type)
-            echo(f"Added '{book_type}' to existing config.yaml")
-        else:
-            echo(f"Type '{book_type}' already in config.yaml")
-    else:
-        # Create new config
-        config = {
-            "types": [book_type]
-        }
-        echo(f"Created config.yaml with type '{book_type}'")
-
-    # Write config
-    with open(config_path, "w", encoding="utf-8") as f:
-        f.write("# Book project configuration\n")
-        yaml.dump(config, f, default_flow_style=False)
 
 
 def init_project(project_root: Path, book_type: str, echo=print, success_style=None, error_style=None) -> int:
@@ -84,13 +49,6 @@ def init_project(project_root: Path, book_type: str, echo=print, success_style=N
 
     echo(f"Initializing {book_type} book project in {project_root}")
     echo("-" * 50)
-
-    # Create config.yaml
-    if yaml is None:
-        error_style("Error: PyYAML not installed. Run: pip install pyyaml")
-        return 1
-
-    create_config(project_root, book_type, echo)
 
     # Call type-specific init
     if book_type == "latex":
