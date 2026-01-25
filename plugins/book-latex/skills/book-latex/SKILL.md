@@ -9,26 +9,125 @@ allowed-tools: Read, Glob, Grep, Edit, Write, Bash, AskUserQuestion
 
 Write structured book projects with parts, chapters, sections, and appendices with the Latex typewriting langauge.
 
-
 ## Initialize Project
 
-If you are reading this section, it means that the book yes YET NOT initiated and you need to run the initialization workflow.
+If you are reading this section, it means that the book yes YET NOT initiated and you need to run the initialization workflow:
 
 ### Workflow
 
+#### Step 1: Install the book CLI
+
+##### Prerequisites
+
+Check if the user has uv installed, if not, install it:
+
+Install [uv](https://docs.astral.sh/uv/) (Python package manager):
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+##### Installation command
+
+Run the following command to install the book CLI:
 
 ```bash
-book init <args>
+uv tool install .claude/skills/book-latex/cli/windows/
 ```
+
+make sure the installation is successful by running the following command:
+```bash
+book --help
+```
+
+if the command is not found, try running the following command:
+```bash
+uv tool install .claude/skills/book-latex/cli/windows/
+```
+
+#### Step 2: Initialize the book
+
+Ask the user for the follwing information with the AskUserQuestion tool:
+- Book title
+- Book subtitle
+- Book description
+- Book authors
+- Book year
+- Book edition
+- Book publisher
+- Book city
+- Book state
+- Book zip
+- Book country
+- Book language
+- Book type
+- Book theme
+
+Create a table under the heading "Book metadata" with the following information:
+| Key | Value |
+| --- | --- |
+| Book title | |
+| Book subtitle | |
+| Book description | |
+| Book authors | |
+| Book year | |
+| Book edition | |
+
+| Book publisher | |
+| Book city | |
+| Book state | |
+| Book zip | |
+| Book country | |
+| Book language | |
+| Book type | |
+| Book theme | |
+
+#### Step 3: Initialize the book
+
+Run the following command to initialize the book with the following arguments:
+- --title <Book title>
+- --subtitle <Book subtitle>
+- --description <Book description>
+- --author <Book author(s)>
+- --year <Book year>
+- --edition <Book edition>
+- --publisher <Book publisher>
+- --city <Book city>
+- --state <Book state>
+- --zip <Book zip>
+- --country <Book country>
+- --language <Book language>
+- --type <Book type>
+- --theme <Book theme>
+
+```bash
+book init --title <Book title> --subtitle <Book subtitle> --description <Book description> --author <Book authors> --year <Book year> --edition <Book edition> --publisher <Book publisher> --city <Book city> --state <Book state> --zip <Book zip> --country <Book country> --language <Book language> --type <Book type> --theme <Book theme>
+```
+
+#### Step 4: Compile the book
+
+Run the following command to compile the book:
+```bash
+book compile --bib
+```
+
+#### Step 5: Remove the `Initialize project` section from the SKILL.md file
+
+Remove the `Initialize project` section from the SKILL.md file (this file and this section).
+
+
+
 
 
 ## Book metadata
 
-Description of book
+
 
 ## Workflow
 
 1. Read the user prompt with this
+
+
 
 ## CLI Commands
 

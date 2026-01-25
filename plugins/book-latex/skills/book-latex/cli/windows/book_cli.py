@@ -2,15 +2,17 @@
 Book CLI - Command line tool for managing LaTeX book projects.
 
 Usage:
-    book init <type>        # Initialize a new book project
+    book init               # Initialize a new book project
     book compile [FILENAME] # Compile a LaTeX file
+    book compile --bib      # Compile with bibliography (biber)
     book image new          # Generate a new image
     book image edit         # Edit an existing image
 
 Examples:
-    book init latex        # Create a new LaTeX book project
-    book compile           # Compiles main.tex
-    book compile ch01      # Compiles ch01-*.tex (prefix match)
+    book init               # Create a new LaTeX book project
+    book compile            # Compiles main.tex
+    book compile ch01       # Compiles ch01-*.tex (prefix match)
+    book compile --bib      # Compiles main.tex with bibliography
     book image new --path "figures/diagram.png" "A flowchart..."
     book image edit --path "figures/chart.png" "Add a legend"
 """
@@ -22,7 +24,7 @@ from pathlib import Path
 import click
 
 from compile_latex import find_tex_file, run_compile
-from init_book import init_project, SUPPORTED_TYPES
+from init_book import init_project
 from image_gen import generate_image, edit_image
 
 
@@ -34,7 +36,8 @@ def cli():
 
 @cli.command()
 @click.argument("filename", default="main")
-def compile(filename: str):
+@click.option("--bib", "-b", is_flag=True, help="Also compile bibliography with biber")
+def compile(filename: str, bib: bool):
     """Compile a LaTeX file from the book.
 
     FILENAME is the name of the .tex file without extension (default: main).
@@ -47,7 +50,9 @@ def compile(filename: str):
 
         book compile ch01         # Compiles ch01-*.tex
 
-        book compile chii         # Compiles chii-*.tex
+        book compile --bib        # Compiles main.tex with bibliography
+
+        book compile main --bib   # Same as above
     """
     # Find latex directory relative to current working directory
     cwd = Path.cwd()
@@ -74,6 +79,7 @@ def compile(filename: str):
     return_code = run_compile(
         tex_file,
         latex_dir,
+        bib=bib,
         echo=click.echo,
         success_style=partial(click.secho, fg="green"),
         error_style=partial(click.secho, fg="red")
@@ -82,27 +88,21 @@ def compile(filename: str):
 
 
 @cli.command()
-@click.argument("book_type", type=click.Choice(SUPPORTED_TYPES, case_sensitive=False))
-def init(book_type: str):
-    """Initialize a new book project.
-
-    BOOK_TYPE is the format: latex, markdown, or html
+def init():
+    """Initialize a new LaTeX book project.
 
     Creates:
       - config.yaml with project settings
-      - Type-specific folder structure (e.g., latex/)
+      - latex/ folder with book template
 
     Examples:
 
-        book init latex        # Create LaTeX book project
-
-        book init markdown     # Create Markdown book project (not yet supported)
+        book init              # Create LaTeX book project
     """
     cwd = Path.cwd()
 
     return_code = init_project(
         cwd,
-        book_type.lower(),
         echo=click.echo,
         success_style=partial(click.secho, fg="green"),
         error_style=partial(click.secho, fg="red")

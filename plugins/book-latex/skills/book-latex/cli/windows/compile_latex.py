@@ -37,13 +37,14 @@ def find_tex_file(latex_dir: Path, name: str) -> Path | None:
     return None
 
 
-def run_compile(tex_file: Path, latex_dir: Path, echo=print, success_style=None, error_style=None) -> int:
+def run_compile(tex_file: Path, latex_dir: Path, bib: bool = False, echo=print, success_style=None, error_style=None) -> int:
     """
     Compile a LaTeX file using pdflatex.
 
     Args:
         tex_file: Path to the .tex file
         latex_dir: Path to the latex directory
+        bib: If True, run biber for bibliography processing
         echo: Function for normal output (print or click.echo)
         success_style: Function for success messages (optional, e.g., click.secho with fg="green")
         error_style: Function for error messages (optional, e.g., click.secho with fg="red")
@@ -83,6 +84,25 @@ def run_compile(tex_file: Path, latex_dir: Path, echo=print, success_style=None,
         cwd=file_dir,
         capture_output=False
     )
+
+    # Run biber for bibliography if requested
+    if bib and result.returncode == 0:
+        aux_name = tex_file.stem
+        biber_cmd = ["biber", f"--output-directory={build_dir}", aux_name]
+        echo("-" * 50)
+        echo("Running biber for bibliography...")
+        biber_result = subprocess.run(biber_cmd, cwd=file_dir, capture_output=False)
+
+        if biber_result.returncode == 0:
+            # Run pdflatex two more times to resolve references
+            for i in range(2):
+                echo("-" * 50)
+                echo(f"Running pdflatex (pass {i + 2})...")
+                result = subprocess.run(cmd, cwd=file_dir, capture_output=False)
+                if result.returncode != 0:
+                    break
+        else:
+            result = biber_result
 
     if result.returncode == 0:
         pdf_name = tex_file.stem + ".pdf"
