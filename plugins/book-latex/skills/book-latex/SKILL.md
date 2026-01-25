@@ -62,10 +62,10 @@ book compile sec01        # Compile first matching sec01-*.tex
 
 Generate and edit images using AI (requires GEMINI_API_KEY in .env):
 
-| Task           | CLI (after install)                            | Standalone (no install)                                     |
-| -------------- | ---------------------------------------------- | ----------------------------------------------------------- |
-| Generate image | `book image new --path "path.png" "prompt"`  | `uv run .../image_gen.py new --path "path.png" "prompt"`  |
-| Edit image     | `book image edit --path "path.png" "prompt"` | `uv run .../image_gen.py edit --path "path.png" "prompt"` |
+| Task           | CLI (after install)                            | Standalone (no install)                                           |
+| -------------- | ---------------------------------------------- | ----------------------------------------------------------------- |
+| Generate image | `book image new --path "path.png" "prompt"`  | generates a new image according to prompt, and saves it to --path |
+| Edit image     | `book image edit --path "path.png" "prompt"` | edits an existing image at --path and overwrites it               |
 
 **Examples:**
 
