@@ -8,13 +8,13 @@ This document describes the folder and file naming conventions for creating stru
 
 ```
 type/
-├── main.xx                          # Root file - includes all parts
-├── localsettings.xx                 # Global settings/styles
+├── main.tex                          # Root file - includes all parts
+├── localsettings.tex                 # Global settings/styles
 ├── 100-frontmatter/                 # Front matter section
 ├── 200-bodymatter/                  # Main content
 │   ├── part01-name/                 # Part 1
 │   │   └── chXX-name/               # Chapters (roman numerals for intro)
-│   │       └── secXX-name.xx        # Sections
+│   │       └── secXX-name.tex        # Sections
 │   └── part02-name/                 # Part 2
 │       └── chXX-name/               # Chapters (arabic numerals)
 ├── 300-backmatter/                  # Back matter section
@@ -61,34 +61,34 @@ After the numeric prefix, use **lowercase descriptive names**:
 ### Level 1: Root
 
 ```
-main.xx                    # Root document
-localsettings.xx           # Global configuration
+main.tex                    # Root document
+localsettings.tex           # Global configuration
 ```
 
 ### Level 2: Major Sections (Frontmatter, Bodymatter, Backmatter)
 
 ```
 100-frontmatter/
-├── frontmatter.xx         # Aggregator - includes all frontmatter files
-├── 100-frontpage.xx       # Title page
-├── 110-preface.xx         # Preface
-├── 120-about.xx           # About this book
-├── 130-acknowledgements.xx
-└── 140-toc.xx             # Table of contents
+├── frontmatter.tex         # Aggregator - includes all frontmatter files
+├── 100-frontpage.tex       # Title page
+├── 110-preface.tex         # Preface
+├── 120-about.tex           # About this book
+├── 130-acknowledgements.tex
+└── 140-toc.tex             # Table of contents
 ```
 
 ```
 200-bodymatter/
-├── bodymatter.xx          # Aggregator - includes all parts
+├── bodymatter.tex          # Aggregator - includes all parts
 ├── part01-innledning/     # Part 1: Introduction
 └── part02-omrader/        # Part 2: Topics
 ```
 
 ```
 300-backmatter/
-├── backmatter.xx          # Aggregator
-├── 100-bibliography.xx    # References list
-├── 110-index.xx           # Index
+├── backmatter.tex          # Aggregator
+├── 100-bibliography.tex    # References list
+├── 110-index.tex           # Index
 ├── app01-name/            # Appendix A
 └── app02-name/            # Appendix B
 ```
@@ -100,9 +100,9 @@ Parts are numbered folders within bodymatter:
 ```
 200-bodymatter/
 ├── part01-innledning/     # Part 1
-│   └── part01.xx          # Part aggregator
+│   └── part01.tex          # Part aggregator
 └── part02-omrader/        # Part 2
-    └── part02.xx          # Part aggregator
+    └── part02.tex          # Part aggregator
 ```
 
 ### Level 4: Chapters
@@ -114,11 +114,11 @@ Chapters use prefixes that match their numbering scheme:
 ```
 part01-innledning/
 ├── chi-begreper/                           # Chapter I
-│   └── chi-begreper.xx
+│   └── chi-begreper.tex
 ├── chii-arbeidsflyt-og-ki/                 # Chapter II
-│   └── chii-arbeidsflyt-og-ki.xx
+│   └── chii-arbeidsflyt-og-ki.tex
 └── chiii-prosjektgjennomforing-med-ki/     # Chapter III
-    └── chiii-prosjektgjennomforing-med-ki.xx
+    └── chiii-prosjektgjennomforing-med-ki.tex
 ```
 
 **Part 2 (Main content) - Arabic numerals:**
@@ -126,11 +126,11 @@ part01-innledning/
 ```
 part02-omrader/
 ├── ch01-ettersporselprognoser/     # Chapter 1
-│   └── ch01-ettersporselprognoser.xx
+│   └── ch01-ettersporselprognoser.tex
 ├── ch02-lagerstyring/              # Chapter 2
-│   └── ch02-lagerstyring.xx
+│   └── ch02-lagerstyring.tex
 └── ch03-produksjonsplanlegging/    # Chapter 3
-    └── ch03-produksjonsplanlegging.xx
+    └── ch03-produksjonsplanlegging.tex
 ```
 
 ### Level 5: Sections
@@ -139,15 +139,15 @@ Sections are files within chapter folders:
 
 ```
 ch01-ettersporselprognoser/
-├── ch01-ettersporselprognoser.xx      # Chapter file (aggregator)
-├── sec01-omrade.xx                    # Section 1.1
-├── sec02-problemstilling.xx           # Section 1.2
-├── sec03-modell.xx                    # Section 1.3
-├── sec04-prosess.xx                   # Section 1.4
-├── sec05-metode.xx                    # Section 1.5
-├── sec06-eksempel-kampanjestyring.xx  # Section 1.6
-├── sec07-eksempel-lagerstyring-ml.xx  # Section 1.7
-└── sec08-anbefalt-fordypning.xx       # Section 1.8
+├── ch01-ettersporselprognoser.tex      # Chapter file (aggregator)
+├── sec01-omrade.tex                    # Section 1.1
+├── sec02-problemstilling.tex           # Section 1.2
+├── sec03-modell.tex                    # Section 1.3
+├── sec04-prosess.tex                   # Section 1.4
+├── sec05-metode.tex                    # Section 1.5
+├── sec06-eksempel-kampanjestyring.tex  # Section 1.6
+├── sec07-eksempel-lagerstyring-ml.tex  # Section 1.7
+└── sec08-anbefalt-fordypning.tex       # Section 1.8
 ```
 
 ### Level 6: Supporting Folders
@@ -156,8 +156,8 @@ Each chapter can have supporting folders:
 
 ```
 ch01-ettersporselprognoser/
-├── ch01-ettersporselprognoser.xx
-├── sec01-omrade.xx
+├── ch01-ettersporselprognoser.tex
+├── sec01-omrade.tex
 ├── figures/          # Images for this chapter
 ├── docs/             # Source documents, notes
 └── references/       # Chapter-specific references
@@ -171,78 +171,78 @@ Based on "Kvantitative metoder i logistikk":
 
 ```
 latex/
-├── main.xx
-├── localsettings.xx
+├── main.tex
+├── localsettings.tex
 ├── bib/
 │   └── references.bib
 │
 ├── 100-frontmatter/
-│   ├── frontmatter.xx
-│   ├── 100-frontpage.xx
-│   ├── 110-preface.xx
-│   ├── 120-about.xx
-│   ├── 130-acknowledgements.xx
-│   └── 140-toc.xx
+│   ├── frontmatter.tex
+│   ├── 100-frontpage.tex
+│   ├── 110-preface.tex
+│   ├── 120-about.tex
+│   ├── 130-acknowledgements.tex
+│   └── 140-toc.tex
 │
 ├── 200-bodymatter/
-│   ├── bodymatter.xx
+│   ├── bodymatter.tex
 │   │
 │   ├── part01-innledning/
-│   │   ├── part01.xx
+│   │   ├── part01.tex
 │   │   │
 │   │   ├── chi-begreper/
-│   │   │   ├── chi-begreper.xx
-│   │   │   ├── sec01-omrade.xx
-│   │   │   ├── sec02-problemstilling.xx
-│   │   │   ├── sec03-modell.xx
-│   │   │   ├── sec04-prosess.xx
-│   │   │   ├── sec05-metoder.xx
+│   │   │   ├── chi-begreper.tex
+│   │   │   ├── sec01-omrade.tex
+│   │   │   ├── sec02-problemstilling.tex
+│   │   │   ├── sec03-modell.tex
+│   │   │   ├── sec04-prosess.tex
+│   │   │   ├── sec05-metoder.tex
 │   │   │   └── figures/
 │   │   │
 │   │   ├── chii-arbeidsflyt-og-ki/
-│   │   │   ├── chii-arbeidsflyt-og-ki.xx
-│   │   │   ├── sec01-arbeidsflyt.xx
-│   │   │   ├── sec02-ki.xx
+│   │   │   ├── chii-arbeidsflyt-og-ki.tex
+│   │   │   ├── sec01-arbeidsflyt.tex
+│   │   │   ├── sec02-ki.tex
 │   │   │   └── figures/
 │   │   │
 │   │   └── chiii-prosjektgjennomforing-med-ki/
-│   │       ├── chiii-prosjektgjennomforing-med-ki.xx
-│   │       ├── sec01-rolleavklaring.xx
-│   │       ├── sec02-fire-faser.xx
+│   │       ├── chiii-prosjektgjennomforing-med-ki.tex
+│   │       ├── sec01-rolleavklaring.tex
+│   │       ├── sec02-fire-faser.tex
 │   │       └── figures/
 │   │
 │   └── part02-omrader/
-│       ├── part02.xx
+│       ├── part02.tex
 │       │
 │       ├── ch01-ettersporselprognoser/
-│       │   ├── ch01-ettersporselprognoser.xx
-│       │   ├── sec01-omrade.xx
-│       │   ├── sec02-problemstilling.xx
-│       │   ├── sec03-modell.xx
-│       │   ├── sec04-prosess.xx
-│       │   ├── sec05-metode.xx
-│       │   ├── sec06-eksempel-kampanjestyring.xx
-│       │   ├── sec07-eksempel-lagerstyring-ml.xx
-│       │   ├── sec08-anbefalt-fordypning.xx
+│       │   ├── ch01-ettersporselprognoser.tex
+│       │   ├── sec01-omrade.tex
+│       │   ├── sec02-problemstilling.tex
+│       │   ├── sec03-modell.tex
+│       │   ├── sec04-prosess.tex
+│       │   ├── sec05-metode.tex
+│       │   ├── sec06-eksempel-kampanjestyring.tex
+│       │   ├── sec07-eksempel-lagerstyring-ml.tex
+│       │   ├── sec08-anbefalt-fordypning.tex
 │       │   ├── figures/
 │       │   └── docs/
 │       │
 │       ├── ch02-lagerstyring/
-│       │   ├── ch02-lagerstyring.xx
-│       │   ├── sec01-kvantitative-utfordringer.xx
-│       │   ├── sec02-metoder-lagerstyring.xx
-│       │   ├── sec03-lagerstyring-eksempel-metode-1.xx
-│       │   ├── sec04-lagerstyring-eksempel-metode-2.xx
-│       │   ├── sec05-lagerstyring-eksempel-metode-3.xx
-│       │   ├── sec06-lagerstyring-eksempel-metode-4.xx
-│       │   └── sec07-lagerstyring-eksempel-metode-5.xx
+│       │   ├── ch02-lagerstyring.tex
+│       │   ├── sec01-kvantitative-utfordringer.tex
+│       │   ├── sec02-metoder-lagerstyring.tex
+│       │   ├── sec03-lagerstyring-eksempel-metode-1.tex
+│       │   ├── sec04-lagerstyring-eksempel-metode-2.tex
+│       │   ├── sec05-lagerstyring-eksempel-metode-3.tex
+│       │   ├── sec06-lagerstyring-eksempel-metode-4.tex
+│       │   └── sec07-lagerstyring-eksempel-metode-5.tex
 │       │
 │       └── ... (ch03 through ch11 follow same pattern)
 │
 └── 300-backmatter/
-    ├── backmatter.xx
-    ├── 100-bibliography.xx
-    ├── 110-index.xx
+    ├── backmatter.tex
+    ├── 100-bibliography.tex
+    ├── 110-index.tex
     ├── app01-sjekklister/
     └── app02-types/
 ```
@@ -254,14 +254,14 @@ latex/
 | Element                 | Pattern           | Example                           |
 | ----------------------- | ----------------- | --------------------------------- |
 | Major section folder    | `NNN-name/`     | `100-frontmatter/`              |
-| Frontmatter file        | `NNN-name.xx`   | `120-about.xx`                  |
+| Frontmatter file        | `NNN-name.tex`   | `120-about.tex`                  |
 | Part folder             | `partNN-name/`  | `part01-innledning/`            |
 | Chapter folder (roman)  | `chR-name/`     | `chi-begreper/`                 |
 | Chapter folder (arabic) | `chNN-name/`    | `ch01-ettersporselprognoser/`   |
-| Chapter file            | `chNN-name.xx`  | `ch01-ettersporselprognoser.xx` |
-| Section file            | `secNN-name.xx` | `sec01-omrade.xx`               |
+| Chapter file            | `chNN-name.tex`  | `ch01-ettersporselprognoser.tex` |
+| Section file            | `secNN-name.tex` | `sec01-omrade.tex`               |
 | Appendix folder         | `appNN-name/`   | `app01-sjekklister/`            |
-| Aggregator file         | `name.xx`       | `bodymatter.xx`                 |
+| Aggregator file         | `name.tex`       | `bodymatter.tex`                 |
 
 ---
 
@@ -269,12 +269,12 @@ latex/
 
 1. **Folder = File**: The main file inside a folder has the same name as the folder
 
-   - `ch01-ettersporselprognoser/ch01-ettersporselprognoser.xx`
+   - `ch01-ettersporselprognoser/ch01-ettersporselprognoser.tex`
 2. **Aggregators**: Each container folder has an aggregator file that includes its children
 
-   - `frontmatter.xx` includes all frontmatter files
-   - `part01.xx` includes all chapters in Part 1
-   - `ch01-ettersporselprognoser.xx` includes all sections
+   - `frontmatter.tex` includes all frontmatter files
+   - `part01.tex` includes all chapters in Part 1
+   - `ch01-ettersporselprognoser.tex` includes all sections
 3. **Numeric sorting**: Prefixes ensure correct display order in file browsers
 4. **Self-contained chapters**: Each chapter folder contains everything it needs:
 

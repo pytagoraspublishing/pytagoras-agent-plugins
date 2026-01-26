@@ -23,7 +23,7 @@ from pathlib import Path
 
 import click
 
-from compile_latex import find_tex_file, run_compile
+from compile_latex import find_tex_file, run_compile, AmbiguousTargetError
 from init_book import init_project
 from image_gen import generate_image, edit_image
 
@@ -42,13 +42,20 @@ def compile(filename: str, bib: bool):
 
     FILENAME is the name of the .tex file without extension (default: main).
 
-    Supports prefix matching: 'ch01' will find 'ch01-ettersporselprognoser.tex'
+    Supports:
+    - Prefix matching: 'ch01' will find 'ch01-ettersporselprognoser.tex'
+    - Numeric notation: '3.5.13' for part 3, chapter 5, section 13
+    - Appendix notation: 'A.1' for appendix 1, 'A.2.5' for appendix 2 section 5
 
     Examples:
 
         book compile              # Compiles main.tex
 
         book compile ch01         # Compiles ch01-*.tex
+
+        book compile 3.5          # Compiles part03/ch05
+
+        book compile A.1          # Compiles app01 in backmatter
 
         book compile --bib        # Compiles main.tex with bibliography
 
@@ -69,7 +76,20 @@ def compile(filename: str, bib: bool):
         sys.exit(1)
 
     # Find the tex file
-    tex_file = find_tex_file(latex_dir, filename)
+    try:
+        tex_file = find_tex_file(latex_dir, filename)
+    except AmbiguousTargetError as e:
+        click.secho(f"Error: '{e.target}' matches multiple files:", fg="red")
+        for i, match in enumerate(e.matches, 1):
+            rel_path = match.relative_to(latex_dir)
+            click.echo(f"  {i}. {rel_path}")
+        if e.suggestions:
+            click.echo()
+            click.secho("Use numeric notation to specify which one:", fg="yellow")
+            for suggestion, path in e.suggestions:
+                rel_path = path.relative_to(latex_dir)
+                click.echo(f"  book compile {suggestion}  # {rel_path}")
+        sys.exit(1)
 
     if tex_file is None:
         click.secho(f"Error: Could not find {filename}.tex in {latex_dir}", fg="red")

@@ -138,8 +138,12 @@ For the given prompt:
    1. @docs/book-structure-guide.md to learn about the general bookstructure
    2. @latex/latex-code-style.md to learn about the preferred Latex code style
 2. Locate which tex files to change
-3. Make a plan to fulfil the workflow
+   1. Locate which chapter the change belongs to, for instance ch02, or by the `<title>` of the chapter.
+   2. Locate which section of this chapter the change belongs to, for instance sec04, or by the `<title>` of the section
+3. 
 4. Make the changes following best practice for latex
+5. When DONE:
+   1. Run the command 
 
 ## CLI Commands
 
@@ -158,7 +162,7 @@ All commands must be run from the **project root directory**.
 | Compile chapter 1  | `book compile ch01`  | compiles the chapter ch01, that is, compiles the ch01.tex file     |
 | Compile chapter ii | `book compile chii`  | in general, chapter can be indexed differently, with patterns chXX |
 | Compile section 01 | `book compile sec01` | compiles the chapter sec01, that is, compiles the sec01.tex file   |
-| Compile appendix   | `book compile sec01` |                                                                    |
+| Compile appendix   | `book compile app01` |                                                                    |
 
 **Examples:**
 
@@ -168,6 +172,44 @@ book compile ch01         # Compile ch01-ettersporselprognoser.tex
 book compile chii         # Compile chii-arbeidsflyt-og-ki.tex
 book compile sec01        # Compile first matching sec01-*.tex
 ```
+
+### Target Notation
+
+Use numeric dot notation for precise targeting when files have duplicate indices across parts/chapters.
+
+**Bodymatter:** `x.x.x` (part.chapter.section)
+
+| Notation   | Meaning                | Example Path                         |
+| ---------- | ---------------------- | ------------------------------------ |
+| `3`      | Part 3                 | part03-name/part03.tex               |
+| `3.5`    | Part 3, Chapter 5      | part03-name/ch05-name/ch05-name.tex  |
+| `3.5.13` | Part 3, Ch 5, Sec 13   | part03-name/ch05-name/sec13-name.tex |
+| `0.5`    | Chapter 5 (no part)    | ch05-name/ch05-name.tex              |
+| `0.5.13` | Ch 5, Sec 13 (no part) | ch05-name/sec13-name.tex             |
+
+**Backmatter (Appendices):** `A.x.x` (appendix.section)
+
+| Notation  | Meaning           | Example Path                             |
+| --------- | ----------------- | ---------------------------------------- |
+| `A.1`   | Appendix 1        | 300-backmatter/app01-name/app01-name.tex |
+| `A.2.5` | Appendix 2, Sec 5 | 300-backmatter/app02-name/sec05-name.tex |
+
+**Examples:**
+
+```bash
+book compile 3.5.13    # Part 03, Chapter 05, Section 13
+book compile 3.5       # Part 03, Chapter 05
+book compile 3         # Part 03
+book compile 0.5.13    # Chapter 05, Section 13 (no part structure)
+book compile 0.5       # Chapter 05 (no part structure)
+book compile A.1       # Appendix 01
+book compile A.2.5     # Appendix 02, Section 05
+book compile main      # Still works (slug match)
+```
+
+Slug-based matching still works: `book compile main`, `book compile ettersporselprognoser`
+
+When ambiguous targets are detected, the CLI will suggest numeric notation alternatives.
 
 ### Image Commands
 
