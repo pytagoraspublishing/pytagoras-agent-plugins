@@ -169,82 +169,201 @@ ch01-ettersporselprognoser/
 
 Based on "Kvantitative metoder i logistikk":
 
-```
-latex/
-├── main.tex
-├── localsettings.tex
-├── bib/
-│   └── references.bib
-│
-├── 100-frontmatter/
-│   ├── frontmatter.tex
-│   ├── 100-frontpage.tex
-│   ├── 110-preface.tex
-│   ├── 120-about.tex
-│   ├── 130-acknowledgements.tex
-│   └── 140-toc.tex
-│
-├── 200-bodymatter/
-│   ├── bodymatter.tex
-│   │
-│   ├── part01-innledning/
-│   │   ├── part01.tex
-│   │   │
-│   │   ├── chi-begreper/
-│   │   │   ├── chi-begreper.tex
-│   │   │   ├── sec01-omrade.tex
-│   │   │   ├── sec02-problemstilling.tex
-│   │   │   ├── sec03-modell.tex
-│   │   │   ├── sec04-prosess.tex
-│   │   │   ├── sec05-metoder.tex
-│   │   │   └── figures/
-│   │   │
-│   │   ├── chii-arbeidsflyt-og-ki/
-│   │   │   ├── chii-arbeidsflyt-og-ki.tex
-│   │   │   ├── sec01-arbeidsflyt.tex
-│   │   │   ├── sec02-ki.tex
-│   │   │   └── figures/
-│   │   │
-│   │   └── chiii-prosjektgjennomforing-med-ki/
-│   │       ├── chiii-prosjektgjennomforing-med-ki.tex
-│   │       ├── sec01-rolleavklaring.tex
-│   │       ├── sec02-fire-faser.tex
-│   │       └── figures/
-│   │
-│   └── part02-omrader/
-│       ├── part02.tex
-│       │
-│       ├── ch01-ettersporselprognoser/
-│       │   ├── ch01-ettersporselprognoser.tex
-│       │   ├── sec01-omrade.tex
-│       │   ├── sec02-problemstilling.tex
-│       │   ├── sec03-modell.tex
-│       │   ├── sec04-prosess.tex
-│       │   ├── sec05-metode.tex
-│       │   ├── sec06-eksempel-kampanjestyring.tex
-│       │   ├── sec07-eksempel-lagerstyring-ml.tex
-│       │   ├── sec08-anbefalt-fordypning.tex
-│       │   ├── figures/
-│       │   └── docs/
-│       │
-│       ├── ch02-lagerstyring/
-│       │   ├── ch02-lagerstyring.tex
-│       │   ├── sec01-kvantitative-utfordringer.tex
-│       │   ├── sec02-metoder-lagerstyring.tex
-│       │   ├── sec03-lagerstyring-eksempel-metode-1.tex
-│       │   ├── sec04-lagerstyring-eksempel-metode-2.tex
-│       │   ├── sec05-lagerstyring-eksempel-metode-3.tex
-│       │   ├── sec06-lagerstyring-eksempel-metode-4.tex
-│       │   └── sec07-lagerstyring-eksempel-metode-5.tex
-│       │
-│       └── ... (ch03 through ch11 follow same pattern)
-│
-└── 300-backmatter/
-    ├── backmatter.tex
-    ├── 100-bibliography.tex
-    ├── 110-index.tex
-    ├── app01-sjekklister/
-    └── app02-types/
+
+```text
+📁 latex/
+├─📁 100-frontmatter/
+│ ├─📄 100-frontpage.tex
+│ ├─📄 110-preface.tex
+│ ├─📄 120-about.tex
+│ ├─📄 130-acknowledgements.tex
+│ ├─📄 140-toc.tex
+│ └─📄 frontmatter.tex
+├─📁 200-bodymatter/
+│ ├─📄 bodymatter.tex
+│ ├─📁 part01-innledning/
+│ │ ├─📁 chi-begreper/
+│ │ │ ├─📄 chi-begreper.tex
+│ │ │ ├─📁 docs/
+│ │ │ │ ├─📄 5-concepts.md
+│ │ │ │ └─📄 Screenshot 2026-01-09 155907.png
+│ │ │ ├─📁 figures/
+│ │ │ │ ├─📄 kapittelstruktur.png
+│ │ │ │ ├─📄 kapittelstruktur_new.png
+│ │ │ │ ├─📄 kompendiet_tilnaerming.png
+│ │ │ │ └─📄 prosess_fem_steg.png
+│ │ │ ├─📄 sec01-omrade.tex
+│ │ │ ├─📄 sec02-problemstilling.tex
+│ │ │ ├─📄 sec03-modell.tex
+│ │ │ ├─📄 sec04-prosess.tex
+│ │ │ └─📄 sec05-metoder.tex
+│ │ ├─📁 chii-arbeidsflyt-og-ki/
+│ │ │ ├─📄 chii-arbeidsflyt-og-ki.tex
+│ │ │ ├─📁 figures/
+│ │ │ │ └─📄 kompendiet_tilnaerming.png
+│ │ │ ├─📄 sec01-arbeidsflyt.tex
+│ │ │ └─📄 sec02-ki.tex
+│ │ ├─📁 chiii-prosjektgjennomforing-med-ki/
+│ │ │ ├─📄 chiii-prosjektgjennomforing-med-ki.tex
+│ │ │ ├─📁 figures/
+│ │ │ │ └─📄 fire_faser.png
+│ │ │ ├─📄 sec01-rolleavklaring.tex
+│ │ │ └─📄 sec02-fire-faser.tex
+│ │ └─📄 part01.tex
+│ └─📁 part02-omrader/
+│   ├─📁 ch01-ettersporselprognoser/
+│   │ ├─📁 build/
+│   │ │ ├─📄 sec01-omrade.aux
+│   │ │ ├─📄 sec01-omrade.bcf
+│   │ │ ├─📄 sec01-omrade.idx
+│   │ │ ├─📄 sec01-omrade.log
+│   │ │ ├─📄 sec01-omrade.out
+│   │ │ ├─📄 sec01-omrade.pdf
+│   │ │ ├─📄 sec01-omrade.run.xml
+│   │ │ └─📄 sec01-omrade.synctex.gz
+│   │ ├─📄 ch01-ettersporselprognoser.tex
+│   │ ├─📁 docs/
+│   │ │ └─📄 ch01.md
+│   │ ├─📁 figures/
+│   │ │ ├─📄 arima_hero.png
+│   │ │ ├─📄 arima_method.png
+│   │ │ ├─📄 arima_model.png
+│   │ │ ├─📄 arima_pdq_definition.png
+│   │ │ ├─📄 arima_problem.png
+│   │ │ ├─📄 ettersporselprognoser_intro.png
+│   │ │ ├─📄 gb_decision_tree.png
+│   │ │ ├─📄 gb_ensemble_concept.png
+│   │ │ ├─📄 gb_hero.png
+│   │ │ ├─📄 gb_level_vs_leaf.png
+│   │ │ ├─📄 gb_method.png
+│   │ │ ├─📄 gb_model.png
+│   │ │ ├─📄 gb_problem.png
+│   │ │ ├─📄 gb_shap_summary.png
+│   │ │ └─📄 gb_time_series_cv.png
+│   │ ├─📄 sec01-omrade.tex
+│   │ ├─📄 sec02-problemstilling.tex
+│   │ ├─📄 sec03-trend-og-sesong.tex
+│   │ ├─📄 sec04-eksterne-faktorer.tex
+│   │ ├─📄 sec05-mange-variabler.tex
+│   │ ├─📄 sec06-intermitterende.tex
+│   │ ├─📄 sec07-komplekse-sekvenser.tex
+│   │ └─📄 sec08-fordypning.tex
+│   ├─📁 ch02-lagerstyring/
+│   │ ├─📄 ch02-lagerstyring.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-lagerstyring.tex
+│   │ ├─📄 sec03-lagerstyring-eksempel-metode-1.tex
+│   │ ├─📄 sec04-lagerstyring-eksempel-metode-2.tex
+│   │ ├─📄 sec05-lagerstyring-eksempel-metode-3.tex
+│   │ ├─📄 sec06-lagerstyring-eksempel-metode-4.tex
+│   │ └─📄 sec07-lagerstyring-eksempel-metode-5.tex
+│   ├─📁 ch03-produksjonsplanlegging/
+│   │ ├─📄 ch03-produksjonsplanlegging.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-produksjonsplanlegging.tex
+│   │ ├─📄 sec03-produksjonsplanlegging-eksempel-metode-1.tex
+│   │ ├─📄 sec04-produksjonsplanlegging-eksempel-metode-2.tex
+│   │ ├─📄 sec05-produksjonsplanlegging-eksempel-metode-3.tex
+│   │ ├─📄 sec06-produksjonsplanlegging-eksempel-metode-4.tex
+│   │ └─📄 sec07-produksjonsplanlegging-eksempel-metode-5.tex
+│   ├─📁 ch04-nettverksdesign/
+│   │ ├─📄 ch04-nettverksdesign.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-nettverksdesign.tex
+│   │ ├─📄 sec03-nettverksdesign-eksempel-metode-1.tex
+│   │ ├─📄 sec04-nettverksdesign-eksempel-metode-2.tex
+│   │ ├─📄 sec05-nettverksdesign-eksempel-metode-3.tex
+│   │ ├─📄 sec06-nettverksdesign-eksempel-metode-4.tex
+│   │ └─📄 sec07-nettverksdesign-eksempel-metode-5.tex
+│   ├─📁 ch05-forsyningskjedeanalyse/
+│   │ ├─📄 ch05-forsyningskjedeanalyse.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-forsyningskjedeanalyse.tex
+│   │ ├─📄 sec03-forsyningskjede-eksempel-metode-1.tex
+│   │ ├─📄 sec04-forsyningskjede-eksempel-metode-2.tex
+│   │ ├─📄 sec05-forsyningskjede-eksempel-metode-3.tex
+│   │ ├─📄 sec06-forsyningskjede-eksempel-metode-4.tex
+│   │ └─📄 sec07-forsyningskjede-eksempel-metode-5.tex
+│   ├─📁 ch06-ko-teori/
+│   │ ├─📄 ch06-ko-teori.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-ko-teori.tex
+│   │ ├─📄 sec03-ko-teori-eksempel-metode-1.tex
+│   │ ├─📄 sec04-ko-teori-eksempel-metode-2.tex
+│   │ ├─📄 sec05-ko-teori-eksempel-metode-3.tex
+│   │ ├─📄 sec06-ko-teori-eksempel-metode-4.tex
+│   │ └─📄 sec07-ko-teori-eksempel-metode-5.tex
+│   ├─📁 ch07-lagerdrift/
+│   │ ├─📄 ch07-lagerdrift.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-lagerdrift.tex
+│   │ ├─📄 sec03-lagerdrift-eksempel-metode-1.tex
+│   │ ├─📄 sec04-lagerdrift-eksempel-metode-2.tex
+│   │ ├─📄 sec05-lagerdrift-eksempel-metode-3.tex
+│   │ ├─📄 sec06-lagerdrift-eksempel-metode-4.tex
+│   │ └─📄 sec07-lagerdrift-eksempel-metode-5.tex
+│   ├─📁 ch08-barekraftig-logistikk/
+│   │ ├─📄 ch08-barekraftig-logistikk.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-barekraftig-logistikk.tex
+│   │ ├─📄 sec03-barekraftig-logistikk-eksempel-metode-1.tex
+│   │ ├─📄 sec04-barekraftig-logistikk-eksempel-metode-2.tex
+│   │ ├─📄 sec05-barekraftig-logistikk-eksempel-metode-3.tex
+│   │ ├─📄 sec06-barekraftig-logistikk-eksempel-metode-4.tex
+│   │ └─📄 sec07-barekraftig-logistikk-eksempel-metode-5.tex
+│   ├─📁 ch09-returlogistikk/
+│   │ ├─📄 ch09-returlogistikk.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-returlogistikk.tex
+│   │ ├─📄 sec03-returlogistikk-eksempel-metode-1.tex
+│   │ ├─📄 sec04-returlogistikk-eksempel-metode-2.tex
+│   │ ├─📄 sec05-returlogistikk-eksempel-metode-3.tex
+│   │ ├─📄 sec06-returlogistikk-eksempel-metode-4.tex
+│   │ └─📄 sec07-returlogistikk-eksempel-metode-5.tex
+│   ├─📁 ch10-innkjopsoptimalisering/
+│   │ ├─📄 ch10-innkjopsoptimalisering.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-innkjopsoptimalisering.tex
+│   │ ├─📄 sec03-innkjopsoptimalisering-eksempel-metode-1.tex
+│   │ ├─📄 sec04-innkjopsoptimalisering-eksempel-metode-2.tex
+│   │ ├─📄 sec05-innkjopsoptimalisering-eksempel-metode-3.tex
+│   │ ├─📄 sec06-innkjopsoptimalisering-eksempel-metode-4.tex
+│   │ └─📄 sec07-innkjopsoptimalisering-eksempel-metode-5.tex
+│   ├─📁 ch11-risikostyring/
+│   │ ├─📄 ch11-risikostyring.tex
+│   │ ├─📄 sec01-kvantitative-utfordringer.tex
+│   │ ├─📄 sec02-metoder-risikostyring.tex
+│   │ ├─📄 sec03-risikostyring-eksempel-metode-1.tex
+│   │ ├─📄 sec04-risikostyring-eksempel-metode-2.tex
+│   │ ├─📄 sec05-risikostyring-eksempel-metode-3.tex
+│   │ ├─📄 sec06-risikostyring-eksempel-metode-4.tex
+│   │ └─📄 sec07-risikostyring-eksempel-metode-5.tex
+│   └─📄 part02.tex
+├─📁 300-backmatter/
+│ ├─📄 100-bibliography.tex
+│ ├─📄 110-index.tex
+│ ├─📁 app01-sjekklister/
+│ │ ├─📄 app01-sjekklister.tex
+│ │ ├─📄 sec01-a-niva.tex
+│ │ ├─📄 sec02-problemstilling.tex
+│ │ ├─📄 sec03-teori-metode-analyse.tex
+│ │ ├─📄 sec04-analyse-resultat.tex
+│ │ └─📄 sec05-figurer-tabeller.tex
+│ ├─📁 app02-types/
+│ │ ├─📄 app02-types.tex
+│ │ ├─📄 sec01-kvalitativ.tex
+│ │ ├─📄 sec02-kvantitativ.tex
+│ │ ├─📄 sec03-mixed-methods.tex
+│ │ ├─📄 sec04-case-studie.tex
+│ │ ├─📄 sec05-drofting.tex
+│ │ ├─📄 sec06-analytisk.tex
+│ │ ├─📄 sec07-modellering.tex
+│ │ └─📄 sec08-teorianalyse.tex
+│ └─📄 backmatter.tex
+├─📁 bib/
+│ └─📄 references.bib
+├─📄 localsettings.tex
+└─📄 main.tex
 ```
 
 ---

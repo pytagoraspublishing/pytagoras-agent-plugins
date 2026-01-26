@@ -293,7 +293,7 @@ def run_compile(tex_file: Path, latex_dir: Path, bib: bool = False, echo=print, 
     if error_style is None:
         error_style = echo
 
-    build_dir = latex_dir / "build"
+    build_dir = latex_dir.parent / "build"
     build_dir.mkdir(exist_ok=True)
 
     # Calculate relative path from latex_dir to tex_file (for display)

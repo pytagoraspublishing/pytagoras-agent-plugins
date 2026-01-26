@@ -130,13 +130,46 @@ Then exit the request and tell the user that they can now start writing the book
 
 ## Book metadata
 
+
+## General latex rules
+
+### Preamble
+
+1. ALWAYS use the latex/localsetting.tex file to:
+
+   1. Add new latex packages
+   2. Define new/redefine commands or environments
+
+### Figures
+
+1. ALWAYS use `figures/name-of-image.png` when refering to an image
+2. ALWAYS us the `book image` command to create
+   1. Any figure used in the book
+   2. Diagrams
+   3. Graphs
+   4. Flowcharts
+   5. ETc
+3. ALWAYS read @docs/images/image-prompts.md before creating the prompt to the `book image` command.
+4. ALWAYS add captions to a figure in latex
+
+### Mathematics
+
+1. ALWAYS prefer `\begin{equation}...\end{equation}` for `$$...$$` or `\[...\]`
+2. ALWAYS prefer `$...$` for `\(...\)`
+
+### Tables
+
+1. Follow the instructions in @docs/latex/tables.md to write tables in latex
+
 ## Workflow
 
 For the given prompt:
 
 1. Read necessary background files (if not already read)
    1. @docs/book-structure-guide.md to learn about the general bookstructure
-   2. @latex/latex-code-style.md to learn about the preferred Latex code style
+   2. @docs/latex-code-style.md to learn about the preferred Latex code style
+   3. @docs/subfile.md to learn about the subfile latex package and how its used in this book
+   4. 
 2. Locate which tex files to change
    1. Locate which chapter the change belongs to, for instance ch02, or by the `<title>` of the chapter.
    2. Locate which section of this chapter the change belongs to, for instance sec04, or by the `<title>` of the section
