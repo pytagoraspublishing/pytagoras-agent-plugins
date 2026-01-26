@@ -88,21 +88,56 @@ def compile(filename: str, bib: bool):
 
 
 @cli.command()
-def init():
+@click.option("--title", help="Book title")
+@click.option("--subtitle", help="Book subtitle")
+@click.option("--description", help="Book description")
+@click.option("--authors", multiple=True, help="Book authors (can be specified multiple times)")
+@click.option("--year", help="Publication year")
+@click.option("--edition", help="Book edition")
+@click.option("--publisher", help="Publisher name")
+@click.option("--city", help="Publisher city")
+@click.option("--state", help="Publisher state")
+@click.option("--zip", "zip_code", help="Publisher zip code")
+@click.option("--country", help="Publisher country")
+@click.option("--language", help="Book language (e.g., english, norsk)")
+@click.option("--type", "book_type", help="Book type")
+@click.option("--theme", help="Book theme")
+def init(title, subtitle, description, authors, year, edition, publisher, city, state, zip_code, country, language, book_type, theme):
     """Initialize a new LaTeX book project.
 
     Creates:
       - config.yaml with project settings
       - latex/ folder with book template
 
+    All options are optional. When provided, they pre-fill the corresponding
+    placeholders in the generated files.
+
     Examples:
 
-        book init              # Create LaTeX book project
+        book init              # Create LaTeX book project with placeholders
+
+        book init --title "My Book" --authors "John Doe"
+
+        book init --authors "John Doe" --authors "Jane Smith" --year 2024
     """
     cwd = Path.cwd()
 
     return_code = init_project(
         cwd,
+        title=title,
+        subtitle=subtitle,
+        description=description,
+        authors=authors,
+        year=year,
+        edition=edition,
+        publisher=publisher,
+        city=city,
+        state=state,
+        zip_code=zip_code,
+        country=country,
+        language=language,
+        book_type=book_type,
+        theme=theme,
         echo=click.echo,
         success_style=partial(click.secho, fg="green"),
         error_style=partial(click.secho, fg="red")

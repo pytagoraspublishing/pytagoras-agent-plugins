@@ -318,10 +318,42 @@ INDEX_TEX = r"""\documentclass[../main.tex]{subfiles}
 
 
 # =============================================================================
+# METADATA HELPER
+# =============================================================================
+
+def apply_metadata(content: str, metadata: dict | None) -> str:
+    """Replace [PROMPT: ...] placeholders with metadata values if provided."""
+    if not metadata:
+        return content
+
+    # Format authors: join with " and " (e.g., "John Doe and Jane Smith")
+    authors = metadata.get("authors", ())
+    authors_str = " and ".join(authors) if authors else None
+
+    # Basic replacements for title page
+    replacements = {
+        "[PROMPT: Book Title]": metadata.get("title"),
+        "[PROMPT: Subtitle or description]": metadata.get("subtitle") or metadata.get("description"),
+        "[PROMPT: Author name(s)]": authors_str,
+    }
+
+    for placeholder, value in replacements.items():
+        if value:
+            content = content.replace(placeholder, value)
+
+    # Handle language in babel package
+    language = metadata.get("language")
+    if language:
+        content = content.replace("[english]{babel}", f"[{language}]{{babel}}")
+
+    return content
+
+
+# =============================================================================
 # SCAFFOLDING FUNCTION
 # =============================================================================
 
-def scaffold_latex(project_root: Path, echo=print) -> None:
+def scaffold_latex(project_root: Path, metadata: dict | None = None, echo=print) -> None:
     """Create LaTeX book skeleton with all necessary files and folders."""
     latex_dir = project_root / "latex"
 
@@ -371,6 +403,7 @@ def scaffold_latex(project_root: Path, echo=print) -> None:
     ]
 
     for filepath, content in files:
+        content = apply_metadata(content, metadata)
         filepath.write_text(content, encoding="utf-8")
         echo(f"  Created: {filepath.relative_to(project_root)}")
 
