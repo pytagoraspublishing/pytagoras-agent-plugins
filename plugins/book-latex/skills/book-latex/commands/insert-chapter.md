@@ -18,6 +18,12 @@ Inserts a new chapter BEFORE the specified position, renumbering subsequent chap
 3. **Rename in reverse order** - Highest number first to avoid conflicts
 4. **Create new chapter** - At the insertion position
 5. **Update aggregator** - Update all paths in part aggregator
+6. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+7. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

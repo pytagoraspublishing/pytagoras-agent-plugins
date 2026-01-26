@@ -21,6 +21,12 @@ Moves a chapter from one part to another.
 6. **Update source aggregator** - Remove entry
 7. **Update target aggregator** - Add entry
 8. **Renumber affected chapters** - In both source and target parts
+9. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+10. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

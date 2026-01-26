@@ -132,7 +132,14 @@ Then exit the request and tell the user that they can now start writing the book
 
 ## Workflow
 
-1. Read the user prompt with this
+For the given prompt:
+
+1. Read necessary background files (if not already read)
+   1. @docs/book-structure-guide.md to learn about the general bookstructure
+   2. @latex/latex-code-style.md to learn about the preferred Latex code style
+2. Locate which tex files to change
+3. Make a plan to fulfil the workflow
+4. Make the changes following best practice for latex
 
 ## CLI Commands
 
@@ -187,7 +194,7 @@ book image edit --path "figures/logo.png" "Change background to blue"
 
 ## Structure Commands
 
-For structural operations, load the command file from `commands/`:
+For structural operations, load the corresponding command file from `commands/`:
 
 | Command         | Description                      | File                          |
 | --------------- | -------------------------------- | ----------------------------- |
@@ -195,6 +202,7 @@ For structural operations, load the command file from `commands/`:
 | Insert Part     | Insert part at specific position | @/commands/insert-part.md     |
 | Rename Part     | Change part slug/title           | @/commands/rename-part.md     |
 | Delete Part     | Remove part and contents         | @/commands/delete-part.md     |
+| Swap Parts      | Exchange two parts               | @/commands/swap-part.md       |
 | New Chapter     | Append chapter to a part         | @/commands/new-chapter.md     |
 | Insert Chapter  | Insert chapter at position       | @/commands/insert-chapter.md  |
 | Rename Chapter  | Change chapter slug/title        | @/commands/rename-chapter.md  |

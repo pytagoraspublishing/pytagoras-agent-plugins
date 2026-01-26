@@ -18,6 +18,12 @@ Appends a new chapter at the end of a part.
 4. **Calculate next number** - Use next available chapter number
 5. **Create files** - Chapter folder, chapter file, figures folder
 6. **Update aggregator** - Add entry to part aggregator
+7. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+8. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

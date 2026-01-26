@@ -18,7 +18,12 @@ Removes an appendix and all its contents.
 2. **Delete folder** - Remove entire appendix folder recursively
 3. **Update aggregator** - Remove entry from backmatter aggregator
 4. **Renumber subsequent appendices** - Maintain sequential order
-5. **Check cross-references** - Search for broken references
+5. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+6. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

@@ -16,6 +16,12 @@ Inserts a new appendix BEFORE the specified position, renumbering subsequent app
 2. **Rename in reverse order** - Highest number first to avoid conflicts
 3. **Create new appendix** - At the insertion position
 4. **Update aggregator** - Update all paths in backmatter aggregator
+5. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+6. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

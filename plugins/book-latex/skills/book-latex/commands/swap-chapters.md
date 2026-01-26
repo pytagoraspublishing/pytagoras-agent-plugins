@@ -17,6 +17,12 @@ Exchanges the positions of two chapters.
 3. **Swap folders and files** - Exchange numbers
 4. **Update labels** - If they include numbers
 5. **Update aggregator** - Reorder entries in part aggregator
+6. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+7. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

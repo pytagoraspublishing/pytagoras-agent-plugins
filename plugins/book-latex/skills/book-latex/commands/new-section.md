@@ -18,6 +18,12 @@ Appends a new section at the end of a chapter.
 3. **Calculate next number** - Use next available section number (sec01, sec02, etc.)
 4. **Create file** - Section file in chapter folder
 5. **Update aggregator** - Add entry to chapter file
+6. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+7. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

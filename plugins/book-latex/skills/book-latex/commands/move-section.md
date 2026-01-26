@@ -22,6 +22,12 @@ Moves a section from one chapter to another.
 6. **Update target aggregator** - Add entry to target chapter
 7. **Renumber affected sections** - In both source and target chapters
 8. **Update cross-references** - Search project for old label references
+9. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+10. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 

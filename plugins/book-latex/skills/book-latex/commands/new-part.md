@@ -15,6 +15,12 @@ Appends a new part at the end of bodymatter.
 2. **Calculate next number** - Use next available part number (01, 02, etc.)
 3. **Create files** - Part folder and aggregator file
 4. **Update aggregator** - Add entry to bodymatter aggregator
+5. **Compile the whole book**: `book compile` if any compilation error:
+   1. Understand and locate the error
+   2. Make changes to fix the error
+   3. Recompile the book
+   4. Repeat until the error is fixed
+6. **Check cross-references** - Search the compilation log to see if there are any broken cross-references due to this change
 
 ## LaTeX Implementation
 
