@@ -4,10 +4,10 @@ Removes a chapter and all its contents.
 
 ## Required Information
 
-| Field | Description | Ask if missing |
-|-------|-------------|----------------|
-| `part` | Part containing the chapter | Yes (if ambiguous) |
-| `chapter` | Chapter identifier (prefix or slug) | Yes |
+| Field       | Description                         | Ask if missing     |
+| ----------- | ----------------------------------- | ------------------ |
+| `part`    | Part containing the chapter         | Yes (if ambiguous) |
+| `chapter` | Chapter identifier (prefix or slug) | Yes                |
 
 ## Preconditions
 
@@ -15,19 +15,60 @@ Removes a chapter and all its contents.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate chapter** - Find chapter by number or slug
-3. **Check contents** - If chapter has content, ask for confirmation
-4. **Load type-specific implementation** - Read `commands/<type>/delete-chapter.md`
-5. **Delete folder** - Remove entire chapter folder recursively
-6. **Update aggregator** - Remove entry from part aggregator
+1. **Locate chapter** - Find chapter by number or slug in the target part
+2. **Delete folder** - Remove entire chapter folder recursively
+3. **Update aggregator** - Remove entry from part aggregator
+4. **Renumber subsequent chapters** - Maintain sequential order
+5. **Check cross-references** - Search for broken references
 
-## Important Notes
+## LaTeX Implementation
 
-- Deleting does NOT renumber remaining chapters
-- Gaps in numbering are allowed
-- Check for broken cross-references after deletion
+### Files to Delete
 
-## Type-Specific Implementation
+Remove entire folder recursively:
 
-Load from: `commands/<type>/delete-chapter.md`
+```
+latex/200-bodymatter/part<NN>-<partslug>/ch<XX>-<slug>/
+```
+
+This includes:
+
+- Chapter file
+- All section files
+- figures/ folder
+- Any other contents
+
+### Part Aggregator Update
+
+In `part<NN>.tex`, remove:
+
+```latex
+% Kapittel <N> - <Title>
+\subfile{ch<XX>-<slug>/ch<XX>-<slug>.tex}
+```
+
+## Renumbering Subsequent Chapters
+
+After deletion, renumber all subsequent chapters to maintain sequential order:
+
+**Example:** Deleting ch02 from [ch01, ch02, ch03, ch04]:
+
+1. ch03 → ch02 (rename folder and files)
+2. ch04 → ch03 (rename folder and files)
+3. Update aggregator file with new paths
+
+**Renaming Steps (for each chapter, from lowest to highest):**
+
+1. Rename folder: `ch<OLD>-<slug>/` → `ch<NEW>-<slug>/`
+2. Rename main file: `ch<OLD>-<slug>.tex` → `ch<NEW>-<slug>.tex`
+3. Update `\subfile{}` path in part aggregator
+
+**Note:** Labels using slugs (`\label{ch:<slug>}`) do NOT need updating.
+
+## Post-Deletion Check
+
+Search for broken references:
+
+- `\ref{ch:<slug>}`
+- `\ref{sec:<slug>:*}`
+- `\hyperref[ch:<slug>]`

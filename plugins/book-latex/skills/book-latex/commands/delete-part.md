@@ -4,9 +4,9 @@ Removes a part and all its contents.
 
 ## Required Information
 
-| Field | Description | Ask if missing |
-|-------|-------------|----------------|
-| `part` | Part identifier (number or slug) | Yes |
+| Field    | Description                      | Ask if missing |
+| -------- | -------------------------------- | -------------- |
+| `part` | Part identifier (number or slug) | Yes            |
 
 ## Preconditions
 
@@ -14,18 +14,47 @@ Removes a part and all its contents.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate part** - Find part by number or slug
-3. **Check contents** - If part has chapters, ask for confirmation
-4. **Load type-specific implementation** - Read `commands/<type>/delete-part.md`
-5. **Delete folder** - Remove entire part folder recursively
-6. **Update aggregator** - Remove entry from bodymatter aggregator
+1. **Locate part** - Find part by number or slug
+2. **Delete folder** - Remove entire part folder recursively
+3. **Update aggregator** - Remove entry from bodymatter aggregator
+4. **Renumber subsequent parts** - Maintain sequential order
 
-## Important Notes
+## LaTeX Implementation
 
-- Deleting does NOT renumber remaining parts
-- Gaps in numbering are allowed
+### Files to Delete
 
-## Type-Specific Implementation
+Remove entire folder recursively:
 
-Load from: `commands/<type>/delete-part.md`
+```
+latex/200-bodymatter/part<NN>-<slug>/
+```
+
+### Aggregator Update
+
+In `latex/200-bodymatter/bodymatter.tex`, remove:
+
+```latex
+% ============ DEL <N>: <TITLE UPPERCASE> ============
+\part{<Title>}
+\setcounter{chapter}{0}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\subfile{part<NN>-<slug>/part<NN>.tex}
+```
+
+## Renumbering Subsequent Parts
+
+After deletion, renumber all subsequent parts to maintain sequential order:
+
+**Example:** Deleting part02 from [part01, part02, part03, part04]:
+
+1. part03 → part02 (rename folder and files)
+2. part04 → part03 (rename folder and files)
+3. Update aggregator file with new paths
+
+**Renaming Steps (for each part, from lowest to highest):**
+
+1. Rename folder: `part<OLD>-<slug>/` → `part<NEW>-<slug>/`
+2. Rename aggregator file: `part<OLD>.tex` → `part<NEW>.tex`
+3. Update `\subfile{}` path in bodymatter.tex
+
+**Note:** Chapter files inside parts do NOT need path updates - they reference `../../main.tex` (relative to main, not to part folder name).

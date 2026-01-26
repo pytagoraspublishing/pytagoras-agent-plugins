@@ -12,18 +12,63 @@ Inserts a new part BEFORE the specified position, renumbering subsequent parts.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Identify parts to renumber** - All parts from position onwards
-3. **Rename in reverse order** - Highest number first to avoid conflicts
-4. **Load type-specific implementation** - Read `commands/<type>/insert-part.md`
-5. **Create new part** - At the insertion position
-6. **Update aggregator** - Update all paths in bodymatter aggregator
+1. **Identify parts to renumber** - All parts from position onwards
+2. **Rename in reverse order** - Highest number first to avoid conflicts
+3. **Create new part** - At the insertion position
+4. **Update aggregator** - Update all paths in bodymatter aggregator
+
+## LaTeX Implementation
+
+### Renumbering Steps
+
+For each part from highest to insertion point (in reverse order):
+
+1. **Rename folder:**
+   ```
+   part<NN>-<slug>/ -> part<NN+1>-<slug>/
+   ```
+
+2. **Rename aggregator file:**
+   ```
+   part<NN>.tex -> part<NN+1>.tex
+   ```
+
+3. **documentclass path stays the same** (`../../main.tex`)
+
+### Files to Create
+
+#### 1. Folder
+```
+latex/200-bodymatter/part<NN>-<slug>/
+```
+
+#### 2. Part Aggregator
+`latex/200-bodymatter/part<NN>-<slug>/part<NN>.tex`
+
+```latex
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+
+% Add chapters here using \subfile{chXX-name/chXX-name.tex}
+
+\end{document}
+```
+
+### Aggregator Update
+
+In `latex/200-bodymatter/bodymatter.tex`:
+
+1. Update all `\subfile{part<NN>-...}` paths for renumbered parts
+2. Insert new entry at correct position:
+```latex
+% ============ DEL <N>: <TITLE UPPERCASE> ============
+\part{<Title>}
+\setcounter{chapter}{0}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\subfile{part<NN>-<slug>/part<NN>.tex}
+```
 
 ## Important Notes
 
 - Rename from highest to lowest to avoid file conflicts
-- Chapter files inside parts do NOT need path updates (they reference `../../main.tex`)
-
-## Type-Specific Implementation
-
-Load from: `commands/<type>/insert-part.md`
+- Chapter files inside parts do NOT need path updates - they reference `../../main.tex` (relative to main, not to part folder name)

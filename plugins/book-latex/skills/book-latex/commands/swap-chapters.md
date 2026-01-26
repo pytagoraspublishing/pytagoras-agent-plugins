@@ -12,15 +12,15 @@ Exchanges the positions of two chapters.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate both chapters** - Find by number or slug
-3. **Load type-specific implementation** - Read `commands/<type>/swap-chapters.md`
-4. **Temporary rename** - Use `.tmp` suffix to avoid conflicts
-5. **Swap folders and files** - Exchange numbers
-6. **Update labels** - If they include numbers
-7. **Update aggregator** - Reorder entries in part aggregator
+1. **Locate both chapters** - Find by number or slug
+2. **Temporary rename** - Use `.tmp` suffix to avoid conflicts
+3. **Swap folders and files** - Exchange numbers
+4. **Update labels** - If they include numbers
+5. **Update aggregator** - Reorder entries in part aggregator
 
-## Workflow Detail
+## LaTeX Implementation
+
+### 1. Use Temporary Names to Avoid Conflicts
 
 ```
 ch02-<slug-a>/ -> ch02-<slug-a>.tmp/
@@ -28,6 +28,38 @@ ch05-<slug-b>/ -> ch02-<slug-b>/
 ch02-<slug-a>.tmp/ -> ch05-<slug-a>/
 ```
 
-## Type-Specific Implementation
+### 2. Rename Chapter Files
 
-Load from: `commands/<type>/swap-chapters.md`
+```
+ch02-<slug-a>.tex -> ch05-<slug-a>.tex
+ch05-<slug-b>.tex -> ch02-<slug-b>.tex
+```
+
+### 3. Update Labels (if using numeric labels)
+
+Usually labels use slugs, so no update needed:
+```latex
+\label{ch:<slug>}  % stays the same
+```
+
+### 4. Update Part Aggregator
+
+Reorder `\subfile{}` lines to match new numeric order:
+
+```latex
+% Before
+\subfile{ch02-<slug-a>/ch02-<slug-a>.tex}
+...
+\subfile{ch05-<slug-b>/ch05-<slug-b>.tex}
+
+% After
+\subfile{ch02-<slug-b>/ch02-<slug-b>.tex}
+...
+\subfile{ch05-<slug-a>/ch05-<slug-a>.tex}
+```
+
+## Important Notes
+
+- The `\documentclass` path stays the same (`../../../main.tex`)
+- Section files inside chapters do NOT need updates
+- No renumbering of other chapters is required (items exchange positions)

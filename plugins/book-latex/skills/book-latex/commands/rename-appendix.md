@@ -14,14 +14,57 @@ At least one of `new_slug` or `new_title` must be provided.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate appendix** - Find appendix by number or slug
-3. **Load type-specific implementation** - Read `commands/<type>/rename-appendix.md`
-4. **Rename folder and file** - If slug changes
-5. **Update appendix content** - Label and title
-6. **Update aggregator** - Update path in backmatter aggregator
-7. **Update cross-references** - Search project for old label references
+1. **Locate appendix** - Find appendix by number or slug
+2. **Rename folder and file** - If slug changes
+3. **Update appendix content** - Label and title
+4. **Update aggregator** - Update path in backmatter aggregator
+5. **Update cross-references** - Search project for old label references
 
-## Type-Specific Implementation
+## LaTeX Implementation
 
-Load from: `commands/<type>/rename-appendix.md`
+### 1. Rename Folder (if slug changes)
+```
+app<NN>-<old-slug>/ -> app<NN>-<new-slug>/
+```
+
+### 2. Rename Appendix File
+```
+app<NN>-<old-slug>.tex -> app<NN>-<new-slug>.tex
+```
+
+### 3. Update Appendix File Content
+
+Label:
+```latex
+\label{app:<old-slug>}
+```
+to:
+```latex
+\label{app:<new-slug>}
+```
+
+Title (if changed):
+```latex
+\chapter{<Old Title>}
+```
+to:
+```latex
+\chapter{<New Title>}
+```
+
+### 4. Update Backmatter Aggregator
+
+In `backmatter.tex`:
+```latex
+\subfile{app<NN>-<old-slug>/app<NN>-<old-slug>.tex}
+```
+to:
+```latex
+\subfile{app<NN>-<new-slug>/app<NN>-<new-slug>.tex}
+```
+
+## Cross-Reference Updates
+
+Search entire project and update:
+- `\ref{app:<old-slug>}` -> `\ref{app:<new-slug>}`
+- `\hyperref[app:<old-slug>]` -> `\hyperref[app:<new-slug>]`

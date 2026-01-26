@@ -36,11 +36,13 @@ uv tool install .claude/skills/book-latex/cli/windows/
 ```
 
 make sure the installation is successful by running the following command:
+
 ```bash
 book --help
 ```
 
 if the command is not found, try running the following command:
+
 ```bash
 uv tool install .claude/skills/book-latex/cli/windows/
 ```
@@ -48,6 +50,7 @@ uv tool install .claude/skills/book-latex/cli/windows/
 #### Step 2: Initialize the book
 
 Ask the user for the follwing information with the AskUserQuestion tool:
+
 - Book title
 - Book subtitle
 - Book description
@@ -63,15 +66,18 @@ Ask the user for the follwing information with the AskUserQuestion tool:
 - Book type
 - Book theme
 
-Create a table under the heading "Book metadata" with the following information:
-| Key | Value |
-| --- | --- |
-| Book title | |
-| Book subtitle | |
-| Book description | |
-| Book authors | |
-| Book year | |
-| Book edition | |
+NB: The user should be able to not answer some of the variables.
+
+Create a table under the heading "Book metadata" in SKILL.md (this file) with the following information:
+
+| Key              | Value |
+| ---------------- | ----- |
+| Book title       |       |
+| Book subtitle    |       |
+| Book description |       |
+| Book authors     |       |
+| Book year        |       |
+| Book edition     |       |
 
 | Book publisher | |
 | Book city | |
@@ -84,21 +90,22 @@ Create a table under the heading "Book metadata" with the following information:
 
 #### Step 3: Initialize the book
 
-Run the following command to initialize the book with the following arguments:
-- --title <Book title>
-- --subtitle <Book subtitle>
-- --description <Book description>
+Run the following command to initialize the book with the following arguments (skip the ones the user skipped in step 2):
+
+- --title `<Book title>`
+- --subtitle `<Book subtitle>`
+- --description `<Book description>`
 - --author <Book author(s)>
-- --year <Book year>
-- --edition <Book edition>
-- --publisher <Book publisher>
-- --city <Book city>
-- --state <Book state>
-- --zip <Book zip>
-- --country <Book country>
-- --language <Book language>
-- --type <Book type>
-- --theme <Book theme>
+- --year `<Book year>`
+- --edition `<Book edition>`
+- --publisher `<Book publisher>`
+- --city `<Book city>`
+- --state `<Book state>`
+- --zip `<Book zip>`
+- --country `<Book country>`
+- --language `<Book language>`
+- --type `<Book type>`
+- --theme `<Book theme>`
 
 ```bash
 book init --title <Book title> --subtitle <Book subtitle> --description <Book description> --author <Book authors> --year <Book year> --edition <Book edition> --publisher <Book publisher> --city <Book city> --state <Book state> --zip <Book zip> --country <Book country> --language <Book language> --type <Book type> --theme <Book theme>
@@ -107,6 +114,7 @@ book init --title <Book title> --subtitle <Book subtitle> --description <Book de
 #### Step 4: Compile the book
 
 Run the following command to compile the book:
+
 ```bash
 book compile --bib
 ```
@@ -115,19 +123,16 @@ book compile --bib
 
 Remove the `Initialize project` section from the SKILL.md file (this file and this section).
 
+#### Step 6: Quit the workflow
 
-
-
+Give the user a message that the book has been initialized and compiled successfully.
+Then exit the request and tell the user that they can now start writing the book.
 
 ## Book metadata
-
-
 
 ## Workflow
 
 1. Read the user prompt with this
-
-
 
 ## CLI Commands
 
@@ -159,7 +164,9 @@ book compile sec01        # Compile first matching sec01-*.tex
 
 ### Image Commands
 
-Generate and edit images using AI (requires GEMINI_API_KEY in .env):
+Generate and edit images using AI (requires GEMINI_API_KEY in .env).
+
+Read @.claude\skills\book-latex\docs\images\image-prompts.md to learn about how to make the "prompt":
 
 | Task           | CLI (after install)                            | Standalone (no install)                                           |
 | -------------- | ---------------------------------------------- | ----------------------------------------------------------------- |
@@ -182,18 +189,30 @@ book image edit --path "figures/logo.png" "Change background to blue"
 
 For structural operations, load the command file from `commands/`:
 
-| Operation          | Command File                                                                                                                       |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Part**     | `new-part.md`, `insert-part.md`, `rename-part.md`, `delete-part.md`                                                        |
-| **Chapter**  | `new-chapter.md`, `insert-chapter.md`, `rename-chapter.md`, `delete-chapter.md`, `move-chapter.md`, `swap-chapters.md` |
-| **Section**  | `new-section.md`, `insert-section.md`, `rename-section.md`, `delete-section.md`, `move-section.md`, `swap-sections.md` |
-| **Appendix** | `new-appendix.md`, `insert-appendix.md`, `rename-appendix.md`, `delete-appendix.md`                                        |
+| Command         | Description                      | File                          |
+| --------------- | -------------------------------- | ----------------------------- |
+| New Part        | Append a new part at the end     | @/commands/new-part.md        |
+| Insert Part     | Insert part at specific position | @/commands/insert-part.md     |
+| Rename Part     | Change part slug/title           | @/commands/rename-part.md     |
+| Delete Part     | Remove part and contents         | @/commands/delete-part.md     |
+| New Chapter     | Append chapter to a part         | @/commands/new-chapter.md     |
+| Insert Chapter  | Insert chapter at position       | @/commands/insert-chapter.md  |
+| Rename Chapter  | Change chapter slug/title        | @/commands/rename-chapter.md  |
+| Delete Chapter  | Remove chapter and contents      | @/commands/delete-chapter.md  |
+| Move Chapter    | Move chapter between parts       | @/commands/move-chapter.md    |
+| Swap Chapters   | Exchange two chapters            | @/commands/swap-chapters.md   |
+| New Section     | Append section to a chapter      | @/commands/new-section.md     |
+| Insert Section  | Insert section at position       | @/commands/insert-section.md  |
+| Rename Section  | Change section slug/title        | @/commands/rename-section.md  |
+| Delete Section  | Remove section                   | @/commands/delete-section.md  |
+| Move Section    | Move section between chapters    | @/commands/move-section.md    |
+| Swap Sections   | Exchange two sections            | @/commands/swap-sections.md   |
+| New Appendix    | Append new appendix              | @/commands/new-appendix.md    |
+| Insert Appendix | Insert appendix at position      | @/commands/insert-appendix.md |
+| Rename Appendix | Change appendix slug/title       | @/commands/rename-appendix.md |
+| Delete Appendix | Remove appendix                  | @/commands/delete-appendix.md |
 
-Each command file specifies:
-
-1. Required information to gather
-2. Type-agnostic workflow steps
-3. Reference to type-specific implementation in `commands/<type>/`
+Each command file contains the complete workflow including LaTeX-specific implementation details.
 
 ## Missing Arguments Rule
 
@@ -202,9 +221,3 @@ Each command file specifies:
 - **Part/Chapter/Section/Appendix operations**: Ask for slug and title if not provided
 - **Insert operations**: Ask for position if not specified
 - **Move operations**: Ask for target location if not provided
-
-## Reference Documents
-
-- `templates/structure.md` - Folder/file naming conventions
-- `filetypes/<type>.md` - Type-specific templates and patterns
-- `docs/` - Additional reference documentation

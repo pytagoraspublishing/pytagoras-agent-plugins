@@ -12,22 +12,67 @@ Appends a new chapter at the end of a part.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate part** - Find target part folder
-3. **Find existing chapters** - Count chapters in part
-4. **Determine numbering scheme** - Part01 uses roman (chi, chii), Part02+ uses arabic (ch01, ch02)
-5. **Calculate next number** - Use next available chapter number
-6. **Load type-specific implementation** - Read `commands/<type>/new-chapter.md`
-7. **Create files** - Chapter folder, chapter file, figures folder
-8. **Update aggregator** - Add entry to part aggregator
+1. **Locate part** - Find target part folder
+2. **Find existing chapters** - Count chapters in part
+3. **Determine numbering scheme** - Part01 uses roman (chi, chii), Part02+ uses arabic (ch01, ch02)
+4. **Calculate next number** - Use next available chapter number
+5. **Create files** - Chapter folder, chapter file, figures folder
+6. **Update aggregator** - Add entry to part aggregator
+
+## LaTeX Implementation
+
+### Files to Create
+
+#### 1. Chapter Folder
+```
+latex/200-bodymatter/part<NN>-<partslug>/ch<XX>-<chapter-slug>/
+```
+
+#### 2. Figures Folder
+```
+latex/200-bodymatter/part<NN>-<partslug>/ch<XX>-<chapter-slug>/figures/
+```
+
+#### 3. Chapter Aggregator
+`ch<XX>-<chapter-slug>/ch<XX>-<chapter-slug>.tex`
+
+```latex
+\documentclass[../../../main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+\begin{document}
+
+\chapter{<Chapter Title>}
+\label{ch:<chapter-slug>}
+
+% Chapter introduction
+
+% Add sections here using \subfile{secNN-name.tex}
+
+\ifSubfilesClassLoaded{%
+  \printbibliography
+}{}
+
+\end{document}
+```
+
+### Part Aggregator Update
+
+Add to `part<NN>.tex`:
+
+```latex
+% Kapittel <N> - <Title>
+\subfile{ch<XX>-<chapter-slug>/ch<XX>-<chapter-slug>.tex}
+```
 
 ## Numbering Schemes
 
-| Part | Prefix Pattern | Examples |
-|------|---------------|----------|
-| part01 | `ch<roman>` | chi, chii, chiii |
-| part02+ | `ch<NN>` | ch01, ch02, ch10 |
+| Part | Prefix | Examples |
+|------|--------|----------|
+| part01 | `ch<roman>` | chi, chii, chiii, chiv, chv |
+| part02+ | `ch<NN>` | ch01, ch02, ch10, ch11 |
 
-## Type-Specific Implementation
+## Path Reference
 
-Load from: `commands/<type>/new-chapter.md`
+| Location | documentclass path |
+|----------|-------------------|
+| Chapter file | `../../../main.tex` |

@@ -14,20 +14,71 @@ Inserts a new section BEFORE the specified position, renumbering subsequent sect
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate chapter and section position** - Validate position exists
-3. **Identify sections to renumber** - All sections from position onwards
-4. **Rename in reverse order** - Highest number first to avoid conflicts
-   - Rename file: `sec<NN>-<slug>.tex` -> `sec<NN+1>-<slug>.tex`
-5. **Load type-specific implementation** - Read `commands/<type>/insert-section.md`
-6. **Create new section** - At the insertion position
-7. **Update aggregator** - Update all paths in chapter file
+1. **Locate chapter and section position** - Validate position exists
+2. **Identify sections to renumber** - All sections from position onwards
+3. **Rename in reverse order** - Highest number first to avoid conflicts
+4. **Create new section** - At the insertion position
+5. **Update aggregator** - Update all paths in chapter file
+
+## LaTeX Implementation
+
+### Renumbering Steps
+
+For each section from highest to insertion point (in reverse order):
+
+1. **Rename file:**
+   ```
+   sec<NN>-<slug>.tex -> sec<NN+1>-<slug>.tex
+   ```
+
+2. **Labels using slugs do NOT need updates:**
+   ```latex
+   \label{sec:<chapter>:<slug>}  % stays the same
+   ```
+
+### Files to Create
+
+#### Section File
+`ch<XX>-<chapter-slug>/sec<NN>-<section-slug>.tex`
+
+```latex
+\documentclass[../../../main.tex]{subfiles}
+\graphicspath{{\subfix{../figures/}}}
+\begin{document}
+
+\section{<Section Title>}
+\label{sec:<chapter-slug>:<section-slug>}
+
+% Section content
+
+\end{document}
+```
+
+### Chapter Aggregator Update
+
+In `ch<XX>-<chapter-slug>.tex`:
+
+1. Update all `\subfile{sec<NN>-...}` paths for renumbered sections
+2. Insert new entry at correct position (before `\ifSubfilesClassLoaded`)
+
+### Example
+
+Before:
+```latex
+\subfile{sec01-intro.tex}
+\subfile{sec02-methods.tex}
+\subfile{sec03-results.tex}
+```
+
+Insert section 2 -> after renumbering:
+```latex
+\subfile{sec01-intro.tex}
+\subfile{sec02-background.tex}      % NEW
+\subfile{sec03-methods.tex}         % was sec02
+\subfile{sec04-results.tex}         % was sec03
+```
 
 ## Important Notes
 
 - Rename from highest to lowest to avoid file conflicts
 - Labels using slugs (not numbers) do NOT need updating
-
-## Type-Specific Implementation
-
-Load from: `commands/<type>/insert-section.md`

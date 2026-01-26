@@ -14,17 +14,42 @@ At least one of `new_slug` or `new_title` must be provided.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate part** - Find part by number or slug
-3. **Load type-specific implementation** - Read `commands/<type>/rename-part.md`
-4. **Rename folder** - If slug changes
-5. **Update aggregator** - Update paths and title in bodymatter aggregator
+1. **Locate part** - Find part by number or slug
+2. **Rename folder** - If slug changes
+3. **Update aggregator** - Update paths and title in bodymatter aggregator
 
-## Important Notes
+## LaTeX Implementation
 
-- Child chapter files do NOT need updating (they reference relative paths to main)
-- Only the folder name and aggregator references change
+### 1. Rename Folder (if slug changes)
+```
+latex/200-bodymatter/part<NN>-<old-slug>/
+-> latex/200-bodymatter/part<NN>-<new-slug>/
+```
 
-## Type-Specific Implementation
+### 2. Aggregator file name stays same
+`part<NN>.tex` - only the folder name changes
 
-Load from: `commands/<type>/rename-part.md`
+### 3. Update bodymatter.tex
+
+Change path:
+```latex
+\subfile{part<NN>-<old-slug>/part<NN>.tex}
+```
+to:
+```latex
+\subfile{part<NN>-<new-slug>/part<NN>.tex}
+```
+
+If title changes:
+```latex
+\part{<Old Title>}
+```
+to:
+```latex
+\part{<New Title>}
+```
+
+## Files NOT Needing Updates
+
+- Child chapter files (they reference `../../main.tex`, not the part folder name)
+- Section files (they reference `../../../main.tex`)

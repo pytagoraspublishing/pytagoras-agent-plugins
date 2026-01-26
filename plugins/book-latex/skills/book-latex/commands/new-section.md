@@ -13,14 +13,48 @@ Appends a new section at the end of a chapter.
 
 ## Workflow
 
-1. **Read config** - Determine active filetype from `<type>/config.yaml`
-2. **Locate chapter** - Find target chapter folder
-3. **Find existing sections** - Count sections in chapter
-4. **Calculate next number** - Use next available section number (sec01, sec02, etc.)
-5. **Load type-specific implementation** - Read `commands/<type>/new-section.md`
-6. **Create file** - Section file in chapter folder
-7. **Update aggregator** - Add entry to chapter file
+1. **Locate chapter** - Find target chapter folder
+2. **Find existing sections** - Count sections in chapter
+3. **Calculate next number** - Use next available section number (sec01, sec02, etc.)
+4. **Create file** - Section file in chapter folder
+5. **Update aggregator** - Add entry to chapter file
 
-## Type-Specific Implementation
+## LaTeX Implementation
 
-Load from: `commands/<type>/new-section.md`
+### Files to Create
+
+#### Section File
+`ch<XX>-<chapter-slug>/sec<NN>-<section-slug>.tex`
+
+```latex
+\documentclass[../../../main.tex]{subfiles}
+\graphicspath{{\subfix{../figures/}}}
+\begin{document}
+
+\section{<Section Title>}
+\label{sec:<chapter-slug>:<section-slug>}
+
+% Section content
+
+\end{document}
+```
+
+### Chapter Aggregator Update
+
+Add to `ch<XX>-<chapter-slug>.tex` before `\ifSubfilesClassLoaded`:
+
+```latex
+\subfile{sec<NN>-<section-slug>.tex}
+```
+
+## Path Reference
+
+| Location | documentclass path | graphicspath |
+|----------|-------------------|--------------|
+| Section file | `../../../main.tex` | `\subfix{../figures/}` |
+
+## Label Convention
+
+`sec:<chapter-slug>:<section-slug>`
+
+Example: `sec:transport-optimization:methodology`

@@ -176,24 +176,6 @@ When compiled from `main.tex`, it resolves normally; when compiled from within `
 * When compiling a single subfile, references to labels in *other* subfiles may show as `??` unless you compile the main doc occasionally (or use your editor’s build tools to run LaTeX enough times).
 * Bibliography: usually keep the `\bibliography{...}` / `\addbibresource{...}` in `main.tex`. Subfiles will inherit it when compiled standalone (since they load main).
 
-## When to use `subfiles`
-
-Use it if you want:
-
-* compile-per-chapter workflow,
-* consistent preamble,
-* clean modular structure.
-
-If you *never* compile individual chapters, `\input` is simpler.
-
-If you tell me your folder layout (where `main.tex`, chapter files, and figures live), I can show the cleanest `subfiles` setup + path handling for that exact structure.
-
-how does it work with one more layer, that is if intro.tex refers to subsection1.tex etc?
-
-It works fine — just remember  **everything is still “rooted” in the document you compile** .
-
-With `subfiles`, there are two common patterns for a second layer (intro → subsection files). The cleanest is:
-
 ## Pattern A (recommended): Only the top-level chapter is a subfile; deeper layers use `\input`
 
 **Structure**
@@ -251,7 +233,7 @@ If you ever see “file not found” depending on whether you compile `main.tex`
 
 ---
 
-## Pattern B (robust): Use `\subfile` at every level + `\subfix` for paths
+## Pattern: Use `\subfile` at every level + `\subfix` for paths
 
 This makes each level compilable as its own unit.
 
@@ -300,42 +282,11 @@ Key trick: `\subfix{...}` adjusts paths depending on what you’re compiling, so
 
 ---
 
-## Quick rule of thumb
-
-* If you only need **chapters** to be independently compilable → **Pattern A** (`subfile` for chapters, `input` for children).
-* If you want **every nested piece** to compile standalone → **Pattern B** (subfiles all the way, using `\subfix`).
-
-If you share your actual folders (where `main.tex` sits relative to intro + subsections + figures), I can write the exact include lines that will be “compile-proof” in both main and standalone builds.
-
-how do I compile subsection1.tex  using pdlatex, can I do this fromroot or do i need to cd into the folder where the file is?
-
-You can do it **from the root** — you don’t need to `cd` — as long as you pass the correct path to `pdflatex`.
-
-### Compile a nested file from the root
-
-<pre class="overflow-visible! px-0!" data-start="152" data-end="203"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>pdflatex sections/intro/subsection1.tex
-</span></span></code></div></div></pre>
-
-That works if `subsection1.tex` is a *standalone* file (i.e., it has its own `\documentclass...` and `\begin{document}`), which is typically the case if you’re using the `subfiles` pattern where every level is compilable.
-
-### Where the PDF/output ends up
-
-By default, the output goes next to where you ran the command (the root), not next to the `.tex` file. If you want to force outputs into a build folder:
-
-<pre class="overflow-visible! px-0!" data-start="615" data-end="690"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>pdflatex -output-directory=build sections/intro/subsection1.tex
-</span></span></code></div></div></pre>
-
-### You do **not** need to `cd`, but you *can*
-
-Equivalent if you prefer:
-
-<pre class="overflow-visible! px-0!" data-start="765" data-end="819"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>cd</span><span> sections/intro
-pdflatex subsection1.tex
-</span></span></code></div></div></pre>
+## Quick rules of thumb
 
 ### Important gotcha: relative paths inside the file
 
-When you compile from root, LaTeX’s “current working directory” is the root. That can break any paths in `subsection1.tex` that assume it’s being compiled from its own folder (especially `\includegraphics{...}` without a global `\graphicspath`).
+When you compile from root, LaTeX’s “current working directory” is the root. That can break any paths in `section1.tex` that assume it’s being compiled from its own folder (especially `\includegraphics{...}` without a global `\graphicspath`).
 
 Two reliable fixes:
 
@@ -343,38 +294,6 @@ Two reliable fixes:
 2. Use `\subfix{...}` for paths inside subfiles, e.g.
    <pre class="overflow-visible! px-0!" data-start="1280" data-end="1338"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-tex"><span><span>\includegraphics</span><span>{</span><span>\subfix</span><span>{figures/myplot}}
    </span></span></code></div></div></pre>
-
-### If subsection1.tex is *not* standalone
-
-If `subsection1.tex` is just a fragment (only `\subsection{...}` etc.), you  **can’t compile it directly** . You must compile its parent (`intro.tex`) or the root (`main.tex`).
-
-If you paste the first ~5 lines of `subsection1.tex`, I can tell you instantly which case you’re in and what exact command will work.
-
-Is everything in main.tex inherited to a subfile when compiled standalone?  even other subfiles?
-
-Everything in **the preamble of `main.tex`** is inherited by a subfile when you compile that subfile standalone (because the subfile does `\documentclass[../main.tex]{subfiles}`, which loads `main.tex` as its “master”). That includes:
-
-* `\documentclass` options (via the master)
-* `\usepackage{...}`
-* your custom macros (`\newcommand`, `\DeclareMathOperator`, etc.)
-* settings like `\graphicspath`, `\hypersetup`, counters, theorem styles, etc.
-
-What is **not** “automatically inherited”:
-
-* The **document body** of `main.tex` (everything between `\begin{document}` and `\end{document}`), except the part that is in the subfile itself.
-* **Other subfiles’ content** . Compiling `sections/intro.tex` standalone does *not* pull in the text of `sections/method.tex` unless `intro.tex` (or `main.tex`) explicitly includes it.
-
-### Subfiles vs “other subfiles”
-
-Think of it like this when compiling `intro.tex` standalone:
-
-1. LaTeX loads `main.tex` **preamble** (so you get all packages/macros/settings).
-2. Then it starts the document and typesets **only** what `intro.tex` includes in its own `\begin{document}...\end{document}` (plus any `\input`/`\subfile` calls inside `intro.tex`).
-
-So:
-
-* **Yes:** main preamble is inherited.
-* **No:** other chapters/subfiles are not included unless you include them.
 
 ### Cross-references are the one “sort of” exception
 
@@ -405,41 +324,7 @@ The *body content* from `main.tex` is not pulled in — including your `\printbi
 So:
 
 * Compile `main.tex` → bibliography prints (because `\printbibliography` is in the body of `main.tex`).
-* Compile `sections/intro.tex` standalone →  **no bibliography prints** , unless `intro.tex` itself contains `\printbibliography` (or includes something that does).
-
-### Two common ways to handle this
-
-#### A) You want a bibliography when compiling a subfile standalone
-
-Add `\printbibliography` at the end of that subfile (or conditionally):
-
-<pre class="overflow-visible! px-0!" data-start="1175" data-end="1301"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-tex"><span><span>\documentclass</span><span>[../main.tex]{subfiles}
-</span><span>\begin</span><span>{document}
-
-... your intro text ...
-
-</span><span>\printbibliography</span><span>
-
-</span><span>\end</span><span>{document}
-</span></span></code></div></div></pre>
-
-If you **don’t** want it to appear twice in the full build, you can gate it so it only prints in standalone compilation:
-
-<pre class="overflow-visible! px-0!" data-start="1425" data-end="1572"><div class="contain-inline-size rounded-2xl corner-superellipse/1.1 relative bg-token-sidebar-surface-primary"><div class="sticky top-[calc(--spacing(9)+var(--header-height))] @w-xl/main:top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-tex"><span><span>\documentclass</span><span>[../main.tex]{subfiles}
-</span><span>\begin</span><span>{document}
-
-... content ...
-
-</span><span>\ifSubfilesClassLoaded</span><span>
-  </span><span>\printbibliography</span><span>
-</span><span>\fi</span><span>
-
-</span><span>\end</span><span>{document}
-</span></span></code></div></div></pre>
-
-#### B) You only want the bibliography in the full document
-
-Then keep `\printbibliography` only in `main.tex` and accept that standalone subfile builds won’t show a bibliography (but citations still work).
+* Compile `section.tex` standalone →  **no bibliography prints** , unless `intro.tex` itself contains `\printbibliography` (or includes something that does).
 
 ### One more gotcha: biber run order
 
