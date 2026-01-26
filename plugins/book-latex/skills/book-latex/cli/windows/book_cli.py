@@ -226,5 +226,44 @@ def edit(path: str, resolution: str | None, prompt: str):
     sys.exit(return_code)
 
 
+@cli.command()
+def outline():
+    """Generate a visual tree structure of the latex folder.
+
+    Creates outline.md in the project root with the directory structure
+    using emoji-style formatting.
+
+    Example:
+
+        book outline    # Creates outline.md with latex/ tree
+    """
+    import seedir as sd
+
+    cwd = Path.cwd()
+    latex_dir = cwd / "latex"
+    output_file = cwd / "outline.md"
+
+    if not latex_dir.exists():
+        click.secho(f"Error: latex directory not found at {latex_dir}", fg="red")
+        click.echo("Make sure you run this command from the project root.")
+        sys.exit(1)
+
+    # Generate tree with emoji style
+    tree_output = sd.seedir(
+        path=str(latex_dir),
+        style='emoji',
+        printout=False
+    )
+
+    # Write to outline.md
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write("# Project Structure\n\n")
+        f.write("```text\n")
+        f.write(tree_output)
+        f.write("\n```")
+
+    click.secho(f"Outline saved to {output_file}", fg="green")
+
+
 if __name__ == "__main__":
     cli()

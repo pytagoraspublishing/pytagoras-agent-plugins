@@ -142,8 +142,7 @@ For the given prompt:
    2. Locate which section of this chapter the change belongs to, for instance sec04, or by the `<title>` of the section
 3. 
 4. Make the changes following best practice for latex
-5. When DONE:
-   1. Run the command 
+5. When DONE
 
 ## CLI Commands
 
@@ -163,6 +162,7 @@ All commands must be run from the **project root directory**.
 | Compile chapter ii | `book compile chii`  | in general, chapter can be indexed differently, with patterns chXX |
 | Compile section 01 | `book compile sec01` | compiles the chapter sec01, that is, compiles the sec01.tex file   |
 | Compile appendix   | `book compile app01` |                                                                    |
+| Outline structure  | `book outline`       | generates latex/ tree to outline.md                                |
 
 **Examples:**
 
