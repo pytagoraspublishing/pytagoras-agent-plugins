@@ -159,7 +159,7 @@ Then exit the request and tell the user that they can now start writing the book
 
 ### Tables
 
-1. Follow the instructions in @docs/latex/tables.md to write tables in latex
+1. Follow the instructions in @.claude/skill/docs/latex/tables.md to write tables in latex
 
 ## Workflow
 
@@ -188,14 +188,14 @@ There are TWO types of commands the user can call for these commands:
 
 All commands must be run from the **project root directory**.
 
-| Task               | CLI                    | Description                                                        |
-| ------------------ | ---------------------- | ------------------------------------------------------------------ |
-| Compile full book  | `book compile`       | compiles the entire book, that is, compiles main.tex               |
-| Compile chapter 1  | `book compile ch01`  | compiles the chapter ch01, that is, compiles the ch01.tex file     |
-| Compile chapter ii | `book compile chii`  | in general, chapter can be indexed differently, with patterns chXX |
-| Compile section 01 | `book compile sec01` | compiles the chapter sec01, that is, compiles the sec01.tex file   |
-| Compile appendix   | `book compile app01` |                                                                    |
-| Outline structure  | `book outline`       | generates latex/ tree to outline.md                                |
+| Task                                  | CLI                    | Description                                                        |
+| ------------------------------------- | ---------------------- | ------------------------------------------------------------------ |
+| Compile full book                     | `book compile`       | compiles the entire book, that is, compiles main.tex               |
+| Compile chapter 1 of part 1           | `book compile 1.1`   | compiles the chapter ch01 belonging to part part01                 |
+| Compile chapter ii of part 1          | `book compile 1.ii`  | in general, chapter can be indexed differently, with patterns chXX |
+| Compile section 1 of part 2 chapter 4 | `book compile 2.4.1` | compiles the chapter sec01 within part04 and ch4                   |
+| Compile appendix 3                    | `book compile A.3`   | compiles the cppendix app03                                        |
+| Outline structure                     | `book outline`       | generates latex/ tree to outline.md                                |
 
 **Examples:**
 
@@ -266,6 +266,8 @@ book image edit --path "figures/logo.png" "Change background to blue"
 **Resolution options:** 1K (default), 2K, 4K
 
 **Note:** `edit` overwrites the original image file.
+
+**Note**: A new image must be saved in the figures folder belonging to the .tex file that has the image.
 
 ## Structure Commands
 

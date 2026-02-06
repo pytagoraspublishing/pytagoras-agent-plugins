@@ -11,7 +11,6 @@ All content files use [PROMPT: ...] placeholders.
 
 from pathlib import Path
 
-
 # =============================================================================
 # TEMPLATES
 # =============================================================================
@@ -65,6 +64,11 @@ LOCALSETTINGS_TEX = r"""% ------------------------------------------------------
 \usepackage{xcolor}
 \usepackage{tcolorbox}
 \tcbuselibrary{breakable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+\captionsetup{font=small}
+
 
 % -------------------------------------------------------
 %            CUSTOM ENVIRONMENTS
@@ -321,6 +325,7 @@ INDEX_TEX = r"""\documentclass[../main.tex]{subfiles}
 # METADATA HELPER
 # =============================================================================
 
+
 def apply_metadata(content: str, metadata: dict | None) -> str:
     """Replace [PROMPT: ...] placeholders with metadata values if provided."""
     if not metadata:
@@ -333,7 +338,8 @@ def apply_metadata(content: str, metadata: dict | None) -> str:
     # Basic replacements for title page
     replacements = {
         "[PROMPT: Book Title]": metadata.get("title"),
-        "[PROMPT: Subtitle or description]": metadata.get("subtitle") or metadata.get("description"),
+        "[PROMPT: Subtitle or description]": metadata.get("subtitle")
+        or metadata.get("description"),
         "[PROMPT: Author name(s)]": authors_str,
     }
 
@@ -353,7 +359,10 @@ def apply_metadata(content: str, metadata: dict | None) -> str:
 # SCAFFOLDING FUNCTION
 # =============================================================================
 
-def scaffold_latex(project_root: Path, metadata: dict | None = None, echo=print) -> None:
+
+def scaffold_latex(
+    project_root: Path, metadata: dict | None = None, echo=print
+) -> None:
     """Create LaTeX book skeleton with all necessary files and folders."""
     latex_dir = project_root / "latex"
 
@@ -384,18 +393,18 @@ def scaffold_latex(project_root: Path, metadata: dict | None = None, echo=print)
         (latex_dir / "main.tex", MAIN_TEX),
         (latex_dir / "localsettings.tex", LOCALSETTINGS_TEX),
         (latex_dir / "bib" / "references.bib", REFERENCES_BIB),
-
         # Frontmatter
         (latex_dir / "100-frontmatter" / "frontmatter.tex", FRONTMATTER_TEX),
         (latex_dir / "100-frontmatter" / "100-frontpage.tex", FRONTPAGE_TEX),
         (latex_dir / "100-frontmatter" / "110-preface.tex", PREFACE_TEX),
         (latex_dir / "100-frontmatter" / "120-about.tex", ABOUT_TEX),
-        (latex_dir / "100-frontmatter" / "130-acknowledgements.tex", ACKNOWLEDGEMENTS_TEX),
+        (
+            latex_dir / "100-frontmatter" / "130-acknowledgements.tex",
+            ACKNOWLEDGEMENTS_TEX,
+        ),
         (latex_dir / "100-frontmatter" / "140-toc.tex", TOC_TEX),
-
         # Bodymatter
         (latex_dir / "200-bodymatter" / "bodymatter.tex", BODYMATTER_TEX),
-
         # Backmatter
         (latex_dir / "300-backmatter" / "backmatter.tex", BACKMATTER_TEX),
         (latex_dir / "300-backmatter" / "100-bibliography.tex", BIBLIOGRAPHY_TEX),
@@ -416,7 +425,6 @@ def scaffold_latex(project_root: Path, metadata: dict | None = None, echo=print)
 
 def main():
     """Standalone entry point."""
-    import sys
 
     project_root = Path.cwd()
     scaffold_latex(project_root)
